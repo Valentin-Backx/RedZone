@@ -4,11 +4,13 @@ var canvasWidth,canvasHeight;
 
 var bgRatio;
 
-var toolBeltRatio = 0.05;
-
 var backgroundImage;
 
 var activeTool;
+
+var murs;
+
+var ratio;
 
 window.onload = function () {
 
