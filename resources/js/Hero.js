@@ -10,12 +10,20 @@ function Hero (x,y,image) {
 	this.h = ratio * 32;
 	this.image = image;
 	this.box = new Box(x,y,32 * ratio,32 * ratio);
+
 	this.touchGround = false;
 	this.currentJumpFrameCounter = 0;
 	this.previousJumpHeight = 0;
-	this.downWardSpeed = 0;
-	this.gravityAcceleration = 1;
+
 	this.lastControl = 0;
+
+	this.updateCalls = [this.control];
+
+
+	this.meleeWeaponHeight = 20;
+	this.meleeWeaponWidth = 10;
+	this.meleeForce = 10;
+
 
 	var that = this;
 	window.onkeydown = function(event){
@@ -31,6 +39,9 @@ function Hero (x,y,image) {
 				that.controls.right = true;
 				that.lastControl = 1;
 			break;
+			case 32:
+				that.meleeAttack();
+				break;
 		}
 	}
 	window.onkeyup = function(event){
@@ -49,35 +60,33 @@ function Hero (x,y,image) {
 			break;
 		}
 	}
+	if(this.extendedConstructor)
+	{
+		this.extendedConstructor();
+	}		
+
 }
 
+AddGravityBehavior(Hero);
+AddCollisionSidesCapabilities(Hero);
+AddSideMoveCapabilities(Hero);
+AddAttackAbility(Hero);
+
 Hero.prototype.update = function() {
-	this.gravity();
-	this.control();
+
+	for (var i = this.updateCalls.length - 1; i >= 0; i--) {
+		this.updateCalls[i].call(this);
+	};
 };
 
-Hero.prototype.move = function(xDir) {
-	var xMove = xDir * this.speed;
-	this.box.x += xMove;
-	for (var i = wallTiles.length - 1; i >= 0; i--) {
-		if(isColliding(wallTiles[i].box,this.box))
-		{
-			this.box.x = this.box.x < wallTiles[i].box.x?this.box.x-this.box.w:wallTiles[i].box.x+wallTiles[i].box.w;
-			// console.log("outter limit: "+(wallTiles[i].box.x +wallTiles[i].box.w)+ " my x: "+this.box.x  );
-			this.x = this.box.x;
-			return false;
-		}
-	};
-	// this.x += xMove;
-	this.x = this.box.x;
-	return true;
-};
 
 Hero.prototype.control = function() {
 
 	// console.log("in control: "+this.lastControl)
-
-	this.move(this.lastControl)
+	if(this.lastControl)
+	{
+		this.move(this.lastControl)
+	}
 
 	if(this.jumping)
 	{
@@ -92,8 +101,22 @@ Hero.prototype.adjustJumpPos = function() {
 
 	var newJumpHeight = Math.sin(this.currentJumpFrameCounter/FRAME_JUMP_DELAY) * JUMP_AMPLITUDE;
 
-	this.y -= newJumpHeight - this.previousJumpHeight;
-	this.box.y = this.y;
+	this.box.y -= newJumpHeight - this.previousJumpHeight;
+
+	for (var i = platFormTiles.length - 1; i >= 0; i--) {
+		if(isColliding(platFormTiles[i].box,this.box))
+		{
+			if(platFormTiles[i].box.y + platFormTiles[i].box.h < this.y)
+			{
+				this.box.y += newJumpHeight - this.previousJumpHeight - (this.y - platFormTiles[i].box.y - platFormTiles[i].box.h);
+				this.y = this.box.y;
+				this.endJump();
+				return;
+			}
+		}
+	};
+
+	this.y = this.box.y;
 
 	// console.log("jump height: "+(newJumpHeight - this.previousJumpHeight));
 
@@ -102,11 +125,15 @@ Hero.prototype.adjustJumpPos = function() {
 
 	if(this.currentJumpFrameCounter / FRAME_JUMP_DELAY >= Math.PI / 2)
 	{
-		this.jumping = false;
-		// this.touchGround = true;
-		this.currentJumpFrameCounter = 0;
-		this.previousJumpHeight = 0;
+		this.endJump();
 	}
+};
+
+Hero.prototype.endJump = function() {
+	this.jumping = false;
+	// this.touchGround = true;
+	this.currentJumpFrameCounter = 0;
+	this.previousJumpHeight = 0;	
 };
 
 Hero.prototype.jump = function() {
@@ -117,24 +144,15 @@ Hero.prototype.jump = function() {
 	}
 };
 
-Hero.prototype.gravity = function() {
-	if(this.jumping) return;
-	this.downWardSpeed += this.gravityAcceleration;
-	this.box.y+= this.downWardSpeed;
-	for (var i = 0; i < groundTiles.length; i++) {
-		
-		if(isColliding(groundTiles[i].box,this.box))
-		{
-			this.touchGround = true;
-			this.box.y -=this.downWardSpeed;
-			this.downWardSpeed = 0;
-			return; //on veut pas diminuer le y deux fois.
-		}
-	};
-	this.y+=this.downWardSpeed;
-};
-
 Hero.prototype.draw = function() {
 	context.strokeStyle = "#FFFFFF";
 	context.strokeRect(this.x,this.y,this.w,this.h);
+};
+
+Hero.prototype.damage = function(damage) {
+	this.life -= damage;
+};
+
+Hero.prototype.getTargets = function() {
+	return enemies;
 };

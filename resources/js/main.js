@@ -8,7 +8,8 @@ var backgroundImage;
 
 var activeTool;
 
-var wallTiles,groundTiles,platFormTiles;
+//level elements
+var wallTiles,groundTiles,platFormTiles,enemies;
 
 var ratio;
 
@@ -22,24 +23,20 @@ var JUMP_AMPLITUDE = 200;
 
 var currentLevel;
 
-var wallTileImage,groundTileImage,platFormTileImage;
+var wallTileImage,groundTileImage,platFormTileImage,enemyImage;
 
-var display;
+var display,eventHandler;
+
+var menuButtons;
+
+var canvasLeftOffset;
 
 window.onload = function () {
-
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
 
 	backgroundImage = new Image();
 	backgroundImage.src = "resources/images/background.jpg";
-
-	wallTileImage = new Image();
-	// wallTileImage.src = 
-	groundTileImage = new Image();
-	// groundTileImage.src = 
-	platFormTileImage = new Image();
-	// platFormTileImage.src = 
 
 	canvasHeight = window.innerHeight;
 	canvasWidth = window.innerWidth;
@@ -58,8 +55,8 @@ window.onload = function () {
 	canvas.width = canvasWidth;
 	canvas.height = canvasHeight;
 
-	canvas.style.left = ((window.innerWidth - canvasWidth ) / 2) + "px";
-
+	canvasLeftOffset = ((window.innerWidth - canvasWidth ) / 2);
+	canvas.style.left = canvasLeftOffset + "px";
 
 	bgRatio = backgroundImage.width / backgroundImage.height;
 
@@ -67,12 +64,48 @@ window.onload = function () {
 
 	JUMP_AMPLITUDE *= ratio;
 
-	currentLevel = level1;
-	ParseTiles();
-
-	display = gameLoop;
+	gameStateInit();
 
 	run();
+}
+	
+function gameStateInit () {
+	window.addEventListener("click",function(event){eventHandler(event) },false);
+
+	display = menuLoop;
+	eventHandler = menuClickEventHandler;
+
+	menuButtons = [];
+	menuButtons.push(new Button(canvasWidth / 2,canvasHeight / 2,400,150,"New Game",newGame));
+}
+
+function menuClickEventHandler (event) {
+	for (var i = menuButtons.length - 1; i >= 0; i--) {
+		if(menuButtons[i].isClicked(event.x-canvasLeftOffset,event.y))
+		{
+			menuButtons[i].action();
+		}
+	};
+}
+
+function newGame () {
+	currentLevel = level1;
+	display = gameLoop;
+	eventHandler = function  () {
+		
+	}
+	
+	wallTileImage = new Image();
+	// wallTileImage.src = 
+	groundTileImage = new Image();
+	// groundTileImage.src = 
+	platFormTileImage = new Image();
+	// platFormTileImage.src = 
+	ParseTiles();
+}
+
+function loadGame () {
+	
 }
 
 //Fonctions de synchronisation d'affichage
@@ -104,7 +137,9 @@ function run () {
 }
 
 function menuLoop () {
-	// display menu
+	for (var i = menuButtons.length - 1; i >= 0; i--) {
+		menuButtons[i].draw();
+	};
 }
 
 function gameLoop () {
@@ -115,7 +150,14 @@ function gameLoop () {
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
 	hero.update();
+
+	for(var i = enemies.length - 1; i >= 0; i--) {
+		enemies[i].update();
+		enemies[i].draw();
+	};
+
 	hero.draw();
+
 
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
@@ -123,12 +165,16 @@ function gameLoop () {
 	for (var i = groundTiles.length - 1; i >= 0; i--) {
 		groundTiles[i].draw();
 	};
+	for (var i = platFormTiles.length - 1; i >= 0; i--) {
+		platFormTiles[i].draw();
+	};
 }
 
 function ParseTiles () {
 	wallTiles = new Array();
 	groundTiles = new Array();
 	platFormTiles = new Array();
+	enemies = new Array();
 
 	for (var i = currentLevel.length - 1; i >= 0; i--) {
 			for (var j = currentLevel[i].length - 1; j >= 0; j--) {
@@ -142,10 +188,15 @@ function ParseTiles () {
 						break;
 					case 3:
 						platFormTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,platFormTileImage))
+						break;
 					case "x":
 						hero = new Hero(j * 32 * ratio, i * 32 * ratio);
 						break;
+					case "z":
+						enemies.push(new Enemi(j * 32 * ratio, i * 32 * ratio,enemyImage));
+						break;
 				}
 			};
-		};	
+		};
+
 }
