@@ -39,6 +39,14 @@ var gameOverLabel,gameOver,gameOverTimeout;
 
 var canvasLeftOffset;
 
+var oldheroX;
+
+var scroll =0;
+var vie =10
+var viebase =10
+var parasinc ;
+
+
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
 
@@ -210,13 +218,22 @@ function menuLoop () {
 }
 
 function gameLoop () {
+
+	if (hero.x > 300 && hero.x < 2000){mouvectx();};
+
+	oldheroX= hero.x
+
 	context.fillStyle = "#000000";
+
+	context.fillRect(0,0,10000,10000);
 
 	context.fillRect(0,0,canvasWidth,canvasHeight);
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
 	hero.update();
+
+	paralax();
 
 	for(var i = enemies.length - 1; i >= 0; i--) {
 		enemies[i].update();
