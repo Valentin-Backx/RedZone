@@ -44,16 +44,19 @@ function Hero (x,y,image) {
 				break;
 		}
 	}
+	if (parasinc <0||parasinc >0) {parasinc = 0};
 	window.onkeyup = function(event){
 		switch (event.keyCode){
 			case 37:
 				that.controls.left = false;
+				parasinc = -1;
 				if(that.lastControl < 0) {
 					that.lastControl = 0;
 				}
 			break;
 			case 39:
 				that.controls.right = false;
+				parasinc = 1;
 				if(that.lastControl > 0){
 					that.lastControl = 0;	
 				} 

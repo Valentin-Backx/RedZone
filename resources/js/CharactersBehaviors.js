@@ -40,6 +40,7 @@ function AddGravityBehavior (object) {
 
 function AddSideMoveCapabilities (object) {
 	object.prototype.move = function(xDir) {
+		
 		var xMove = xDir * this.speed;
 		this.box.x += xMove;
 		var tileCollided = this.collisionSides(wallTiles) || this.collisionSides(platFormTiles);

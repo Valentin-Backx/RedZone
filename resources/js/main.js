@@ -30,6 +30,13 @@ var display,eventHandler;
 var menuButtons;
 
 var canvasLeftOffset;
+var oldheroX;
+
+var scroll =0;
+
+var vie =10
+var viebase =10
+var parasinc ;
 
 window.onload = function () {
 	canvas = document.getElementById("canvas");
@@ -89,7 +96,7 @@ function menuClickEventHandler (event) {
 }
 
 function newGame () {
-	currentLevel = level1;
+	currentLevel = level2;
 	display = gameLoop;
 	eventHandler = function  () {
 		
@@ -143,14 +150,21 @@ function menuLoop () {
 }
 
 function gameLoop () {
+
+	
+	
+	if (hero.x > 300 && hero.x < 2000){mouvectx();};
+
+	oldheroX= hero.x
+	
 	context.fillStyle = "#000000";
 
-	context.fillRect(0,0,canvasWidth,canvasHeight);
+	context.fillRect(0,0,10000,10000);
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
 	hero.update();
-
+	paralax();
 	for(var i = enemies.length - 1; i >= 0; i--) {
 		enemies[i].update();
 		enemies[i].draw();
