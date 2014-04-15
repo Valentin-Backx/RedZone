@@ -13,7 +13,7 @@ Button.prototype.draw = function() {
 
 	context.strokeStyle = "#0000FF";
 	context.strokeRect(this.x,this.y,this.w,this.h);
-	context.strokeText("new game",this.x,this.y);	
+	context.strokeText(this.text,this.x,this.y);	
 };
 
 Button.prototype.isClicked = function(x,y) {

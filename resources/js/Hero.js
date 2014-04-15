@@ -19,8 +19,14 @@ function Hero (x,y,image) {
 
 	this.updateCalls = [this.control];
 
+	this.life = 200;
 
-	this.meleeWeaponHeight = 20;
+
+
+	this.attackRange = 50;
+	this.orientation = 1;
+
+	this.meleeWeaponHeight = 1;
 	this.meleeWeaponWidth = 10;
 	this.meleeForce = 10;
 
@@ -44,19 +50,16 @@ function Hero (x,y,image) {
 				break;
 		}
 	}
-	if (parasinc <0||parasinc >0) {parasinc = 0};
 	window.onkeyup = function(event){
 		switch (event.keyCode){
 			case 37:
 				that.controls.left = false;
-				parasinc = -1;
 				if(that.lastControl < 0) {
 					that.lastControl = 0;
 				}
 			break;
 			case 39:
 				that.controls.right = false;
-				parasinc = 1;
 				if(that.lastControl > 0){
 					that.lastControl = 0;	
 				} 
@@ -84,13 +87,10 @@ Hero.prototype.update = function() {
 
 
 Hero.prototype.control = function() {
-
+	this.direction = this.lastControl;
+	
+	this.lookToward = this.direction!=0?this.direction:this.lookToward;
 	// console.log("in control: "+this.lastControl)
-	if(this.lastControl)
-	{
-		this.move(this.lastControl)
-	}
-
 	if(this.jumping)
 	{
 		this.adjustJumpPos();
@@ -154,6 +154,13 @@ Hero.prototype.draw = function() {
 
 Hero.prototype.damage = function(damage) {
 	this.life -= damage;
+	if(this.life<=0)
+	{
+		if(!gameOver)
+		{
+			death();	
+		}
+	}
 };
 
 Hero.prototype.getTargets = function() {

@@ -3,8 +3,12 @@ function AddGravityBehavior (object) {
 	object.prototype.extendedConstructor = function() {
 
 		this.downWardSpeed = 0;
-		this.gravityAcceleration = 1;	
-		this.updateCalls.push(this.gravity);
+		this.gravityAcceleration = 1;
+		this.updateCalls.push(this.gravity,this.move);
+		this.direction = 0;
+		this.lookToward = 1;
+		this.inertia = 0;
+		this.inertiaFrameCounter = 0;
 	};	
 
 
@@ -20,12 +24,15 @@ function AddGravityBehavior (object) {
 			this.touchGround = true;
 			this.downWardSpeed = 0;
 			return;
+		}else
+		{
+			this.touchGround = false;
 		}
 
 		this.y+=this.downWardSpeed;
 	};
 
-	object.prototype.collisionLow = function(tilesArary) {
+	object.prototype.collisionLow = function(tilesArary){
 		
 		for (var i = 0; i < tilesArary.length; i++) {
 			
@@ -39,12 +46,42 @@ function AddGravityBehavior (object) {
 }
 
 function AddSideMoveCapabilities (object) {
-	object.prototype.move = function(xDir) {
-		
-		var xMove = xDir * this.speed;
-		this.box.x += xMove;
+	object.prototype.move = function() {
+
+
+
 		var tileCollided = this.collisionSides(wallTiles) || this.collisionSides(platFormTiles);
 
+		if(this.inertiaFrameCounter++ % INERTIA_FRAME_DELAY == 0)
+		{
+			if(this.direction==0)//frottement (point mort)
+			{
+				if(this.inertia<0)
+				{
+					this.inertia += ACCELERATION;
+				}else if(this.inertia>0)
+				{
+					// debugger;
+					this.inertia-= ACCELERATION;
+				}
+			}else
+			{
+				if(this.direction<0)
+				{
+
+					this.inertia += this.inertia + this.speed > 0 ? this.direction * ACCELERATION:0;
+				}else
+				{
+					this.inertia += this.inertia - this.speed < 0?this.direction * ACCELERATION:0;
+				}
+			}
+		}
+
+		// this.inertia = Math.min(this.inertia,this.speed);
+
+		var xMove = this.inertia;
+
+		this.box.x += xMove;
 
 		if(tileCollided)
 		{
@@ -64,13 +101,9 @@ function AddCollisionSidesCapabilities (object) {
 		for (var i = tileArray.length - 1; i >= 0; i--) {
 			if(
 				isColliding(tileArray[i].box,this.box)
-				// &&!
-				// (
-				// 	tileArray[i].box.y+tileArray[i].box.h > this.box.y
-				// 	|| tileArray[i].box.y < this.box.y + this.box.h
-				// )
 			)
 			{
+				this.inertia = 0;
 				return tileArray[i];
 			}
 		};
@@ -80,14 +113,16 @@ function AddCollisionSidesCapabilities (object) {
 
 function AddAttackAbility(object) {
 	object.prototype.meleeAttack = function() {
+
 		var hitBox = new Box(
-				this.direction<0?this.x:this.x+this.w,
-				this.y + this.meleeWeaponHeight,
-				this.direction<0?this.x - this.attackRange:this.x + this.w + this.attackRange,
-				this.y + this.meleeWeaponHeight + this.meleeWeaponWidth
+				this.lookToward<0?this.x - this.attackRange:this.x+this.w,
+				this.y - this.meleeWeaponHeight,
+				this.attackRange,
+				this.meleeWeaponWidth
 			);
 
 		var targets = this.getTargets();
+
 
 		for (var i = targets.length - 1; i >= 0; i--) {
 

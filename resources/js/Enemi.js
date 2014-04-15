@@ -16,9 +16,11 @@ function Enemi (x,y,image) {
 	this.box = new Box(x,y,32 * ratio,32 * ratio);
 
 	this.updateCalls = [this.onScreen];
-	this.meleeForce = 1;
-	this.meleeWeaponHeight = 20;
-	this.meleeWeaponWidth = 10;	
+	this.meleeForce = 0;//debug
+	this.meleeWeaponHeight = 1;
+	this.meleeWeaponWidth = 10;
+
+	this.scoreValue = 1;
 
 	if(this.extendedConstructor)
 	{
@@ -70,13 +72,15 @@ Enemi.prototype.playerInSightBehavior = function() {
 		{
 			this.move(-1);
 		}
-
 	}
 };
 
-Enemi.prototype.damage = function(damages) {
-	console.log(damage);
-	this.life -= damages;
+Enemi.prototype.damage = function(damage) {
+	this.life -= damage;
+	if(this.life <= 0)
+	{
+		enemyKilled(this);
+	}
 };
 
 Enemi.prototype.getTargets = function() {
