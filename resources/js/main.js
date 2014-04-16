@@ -16,6 +16,8 @@ var ratio;
 var gamePads;
 
 var hero;
+var balle;
+
 
 var FRAME_JUMP_DELAY = 10;
 
@@ -49,7 +51,7 @@ var parasinc ;
 
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
-
+var balles =[];
 
 window.onload = function () {
 	canvas = document.getElementById("canvas");
@@ -219,27 +221,34 @@ function menuLoop () {
 
 function gameLoop () {
 
-	if (hero.x > 300 && hero.x < 1800){mouvectx();};
+	if (hero.x > 0 && hero.x < 1800){mouvectx();};
 
 	oldheroX= hero.x
 
 	context.fillStyle = "#000000";
 
-	context.fillRect(0,0,10000,10000);
+	context.fillRect(conteurctx,0,2000,2000);
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
 	hero.update();
 
 	paralax();
-
+	
+	for (var i = 0; i < balles.length; i++) {
+		balles[i].draw();
+		balles[i].move();
+	}
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< enemies.length; j++) {
+			console.log(isColliding(balles[i].box,enemies[j].box))
+			if (isColliding(balles[i].box,enemies[j].box)){balles.splice(i,1);i--}
+		}
+	};
 	for(var i = enemies.length - 1; i >= 0; i--) {
 		enemies[i].update();
 		enemies[i].draw();
 	};
-
-	hero.draw();
-
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
 	};
@@ -249,9 +258,15 @@ function gameLoop () {
 	for (var i = platFormTiles.length - 1; i >= 0; i--) {
 		platFormTiles[i].draw();
 	};
-	manageScore();
-	displayHud();
+	paralaxF();
+	
 
+	hero.draw();
+
+	manageScore();
+
+	displayHud();
+	
 }
 
 function ParseTiles () {

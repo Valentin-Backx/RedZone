@@ -36,6 +36,7 @@ function Hero (x,y,image) {
 		switch (event.keyCode){
 			case 38:
 				that.jump();
+				that.fire();
 				break; 
 			case 37:
 				parasinc=1
@@ -55,12 +56,14 @@ function Hero (x,y,image) {
 	window.onkeyup = function(event){
 		switch (event.keyCode){
 			case 37:
+				parasinc=1
 				that.controls.left = false;
 				if(that.lastControl < 0) {
-					that.lastControl = 0;
+					that.lastControl = 0;					
 				}
 			break;
 			case 39:
+				parasinc=-1
 				that.controls.right = false;
 				if(that.lastControl > 0){
 					that.lastControl = 0;	
@@ -168,3 +171,23 @@ Hero.prototype.damage = function(damage) {
 Hero.prototype.getTargets = function() {
 	return enemies;
 };
+
+Hero.prototype.fire = function() {
+	balles.push(new balle(this.x,this.y,this.lookToward))
+	console.log(balles,1)
+}
+function balle(x,y,direction){
+	this.h = 5* ratio;
+	this.w = 5* ratio;
+	this.x = x;
+	this.y = y;
+	this.direction = direction;
+	this.box = new Box(x,y,5 * ratio,5 * ratio);
+}
+balle.prototype.draw = function() {
+	context.strokeStyle = "#FFFFFF";
+	context.strokeRect(this.x,this.y,this.w,this.h);
+}
+balle.prototype.move = function() {
+	this.x+=this.direction*5;
+}
