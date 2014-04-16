@@ -1,24 +1,24 @@
 function Enemi (x,y,image) {
-	this.y = y;
-	this.x = x;
+	this.y = y * ratio;
+	this.x = x * ratio;
 
-	this.w = 32 * ratio;
-	this.h = ratio * 32;
+	this.w = 32 * ratio;//remplacer 32 par taille réelle
+	this.h = 32 * ratio;//remplacer 32 par taille réelle
 
-	this.speed = 5;
+	this.speed = 5 * ratio;
 
 	this.life = 10;
 
-	this.attackRange = 25;
+	this.attackRange = 25 * ratio;
 	this.orientation = 1;
 
 	this.image = image;
-	this.box = new Box(x,y,32 * ratio,32 * ratio);
+	this.box = new Box(this.x,this.y,32 * ratio,32 * ratio);//remplacer 32 par hitbox réelle du bonhomme
 
 	this.updateCalls = [this.onScreen];
-	this.meleeForce = 0;//debug
-	this.meleeWeaponHeight = 1;
-	this.meleeWeaponWidth = 10;
+	this.meleeForce = 1;//debug
+	this.meleeWeaponHeight = 1 * ratio;
+	this.meleeWeaponWidth = 10 * ratio;
 
 	this.scoreValue = 1;
 
@@ -60,7 +60,8 @@ Enemi.prototype.playerInSightBehavior = function() {
 			this.meleeAttack();
 		}else
 		{
-			this.move(1);
+			this.direction = 1;
+			this.move();
 		}
 	}else
 	{
@@ -70,7 +71,8 @@ Enemi.prototype.playerInSightBehavior = function() {
 			this.meleeAttack();
 		}else
 		{
-			this.move(-1);
+			this.direction = -1;
+			this.move();
 		}
 	}
 };
