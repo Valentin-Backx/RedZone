@@ -8,4 +8,5 @@ function savectx(){
 }
 function restctx(){
 	context.restore()
+	conteurctx = 0
 }

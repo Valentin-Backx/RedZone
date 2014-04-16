@@ -115,8 +115,6 @@ function menuClickEventHandler (event) {
 
 function newGame () {
 	currentLevel = level2;
-
-
 	display = gameLoop;
 	eventHandler = function  () {
 		
@@ -221,7 +219,7 @@ function menuLoop () {
 
 function gameLoop () {
 
-	if (hero.x > 300 && hero.x < 2000){mouvectx();};
+	if (hero.x > 300 && hero.x < 1800){mouvectx();};
 
 	oldheroX= hero.x
 
@@ -253,6 +251,7 @@ function gameLoop () {
 	};
 	manageScore();
 	displayHud();
+
 }
 
 function ParseTiles () {
