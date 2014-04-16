@@ -3,7 +3,7 @@ function AddGravityBehavior (object) {
 	object.prototype.extendedConstructor = function() {
 
 		this.downWardSpeed = 0;
-		this.gravityAcceleration = 3 * ratio;
+		this.gravityAcceleration = 1;
 		this.updateCalls.push(this.gravity,this.move);
 		this.direction = 0;
 		this.lookToward = 1;
@@ -48,6 +48,8 @@ function AddGravityBehavior (object) {
 function AddSideMoveCapabilities (object) {
 	object.prototype.move = function() {
 
+
+
 		var tileCollided = this.collisionSides(wallTiles) || this.collisionSides(platFormTiles);
 
 		if(this.inertiaFrameCounter++ % INERTIA_FRAME_DELAY == 0)
@@ -56,30 +58,22 @@ function AddSideMoveCapabilities (object) {
 			{
 				if(this.inertia<0)
 				{
-					this.inertia += ACCELERATION * ratio;
-					if(this.inertia>0) this.inertia = 0;
+					this.inertia += ACCELERATION;
 				}else if(this.inertia>0)
 				{
 					// debugger;
-					this.inertia-= ACCELERATION * ratio;
-					if(this.inertia<0)this.inertia = 0;
+					this.inertia-= ACCELERATION;
 				}
 			}else
 			{
 				if(this.direction<0)
 				{
 
-					this.inertia += this.inertia + this.speed > 0 ? this.direction * ACCELERATION * ratio:0;
-					// this.inertia = this.inertia + this.speed < 0 ? 0:this.inertia;
+					this.inertia += this.inertia + this.speed > 0 ? this.direction * ACCELERATION:0;
 				}else
 				{
-					this.inertia += this.inertia - this.speed < 0?this.direction * ACCELERATION * ratio:0;
-					// this.inertia = this.inertia - this.speed > 0 ? 0:this.inertia;
+					this.inertia += this.inertia - this.speed < 0?this.direction * ACCELERATION:0;
 				}
-				// if(Math.abs(this.inertia) <= this.direction * ACCELERATION * ratio)
-				// {
-				// 	this.inertia = 0;
-				// }
 			}
 		}
 
@@ -119,6 +113,7 @@ function AddCollisionSidesCapabilities (object) {
 
 function AddAttackAbility(object) {
 	object.prototype.meleeAttack = function() {
+
 		var hitBox = new Box(
 				this.lookToward<0?this.x - this.attackRange:this.x+this.w,
 				this.y - this.meleeWeaponHeight,

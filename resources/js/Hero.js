@@ -2,14 +2,14 @@ function Hero (x,y,image) {
 
 	this.controls = {right:false,left:false};
 
-	this.speed = 25 * ratio;
+	this.speed = 11;
 
-	this.x = x * ratio;
-	this.y = y * ratio;
-	this.w = 128 * ratio; //remplacer 32 par la taille réelle du sprite hero
-	this.h = 128 * ratio; //remplacer 32 par la taille réelle du sprite hero
+	this.x = x;
+	this.y = y;
+	this.w = 32 * ratio;
+	this.h = ratio * 32;
 	this.image = image;
-	this.box = new Box(this.x,this.y,this.w,this.h);//remplacer 32 par la taille réelle de la hitbox du hero
+	this.box = new Box(x,y,32 * ratio,32 * ratio);
 
 	this.touchGround = false;
 	this.currentJumpFrameCounter = 0;
@@ -23,11 +23,11 @@ function Hero (x,y,image) {
 
 
 
-	this.attackRange = 50 * ratio;
+	this.attackRange = 50;
 	this.orientation = 1;
 
-	this.meleeWeaponHeight = 1 * ratio;
-	this.meleeWeaponWidth = 10 * ratio;
+	this.meleeWeaponHeight = 1;
+	this.meleeWeaponWidth = 10;
 	this.meleeForce = 10;
 
 
@@ -36,6 +36,7 @@ function Hero (x,y,image) {
 		switch (event.keyCode){
 			case 38:
 				that.jump();
+				that.fire();
 				break; 
 			case 37:
 				parasinc=1
@@ -55,12 +56,14 @@ function Hero (x,y,image) {
 	window.onkeyup = function(event){
 		switch (event.keyCode){
 			case 37:
+				parasinc=1
 				that.controls.left = false;
 				if(that.lastControl < 0) {
-					that.lastControl = 0;
+					that.lastControl = 0;					
 				}
 			break;
 			case 39:
+				parasinc=-1
 				that.controls.right = false;
 				if(that.lastControl > 0){
 					that.lastControl = 0;	
@@ -104,7 +107,7 @@ Hero.prototype.adjustJumpPos = function() {
 
 	// console.log("nan? "+Math.sin(this.currentJumpFrameCounter/FRAME_JUMP_DELAY) * JUMP_AMPLITUDE);
 
-	var newJumpHeight = Math.sin(this.currentJumpFrameCounter/FRAME_JUMP_DELAY) * JUMP_AMPLITUDE/* * ratio*/;
+	var newJumpHeight = Math.sin(this.currentJumpFrameCounter/FRAME_JUMP_DELAY) * JUMP_AMPLITUDE;
 
 	this.box.y -= newJumpHeight - this.previousJumpHeight;
 
@@ -168,3 +171,23 @@ Hero.prototype.damage = function(damage) {
 Hero.prototype.getTargets = function() {
 	return enemies;
 };
+
+Hero.prototype.fire = function() {
+	balles.push(new balle(this.x,this.y,this.lookToward))
+	console.log(balles,1)
+}
+function balle(x,y,direction){
+	this.h = 5* ratio;
+	this.w = 5* ratio;
+	this.x = x;
+	this.y = y;
+	this.direction = direction;
+	this.box = new Box(x,y,5 * ratio,5 * ratio);
+}
+balle.prototype.draw = function() {
+	context.strokeStyle = "#FFFFFF";
+	context.strokeRect(this.x,this.y,this.w,this.h);
+}
+balle.prototype.move = function() {
+	this.x+=this.direction*5;
+}

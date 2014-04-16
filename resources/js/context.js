@@ -7,6 +7,6 @@ function savectx(){
 	context.save()
 }
 function restctx(){
-	context.restore();
-	conteurctx = 0;
+	context.restore()
+	conteurctx = 0
 }

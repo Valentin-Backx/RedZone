@@ -1,7 +1,6 @@
 var canvas,context;
 
 var canvasWidth,canvasHeight;
-var BASE_TILE_SIZE = 128;
 
 var bgRatio;
 
@@ -17,10 +16,12 @@ var ratio;
 var gamePads;
 
 var hero;
+var balle;
+
 
 var FRAME_JUMP_DELAY = 10;
 
-var JUMP_AMPLITUDE = 500;
+var JUMP_AMPLITUDE = 200;
 
 var ACCELERATION = 8;
 var INERTIA_FRAME_DELAY = 5;
@@ -47,11 +48,10 @@ var vie =10
 var viebase =10
 var parasinc ;
 
-var levelParser;
 
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
-
+var balles =[];
 
 window.onload = function () {
 	canvas = document.getElementById("canvas");
@@ -74,14 +74,6 @@ window.onload = function () {
 		canvasHeight *= facto;
 	}
 
-	ratio = canvasWidth/1920;
-
-	console.log("calculated tile size: "+BASE_TILE_SIZE * ratio);
-
-	console.log("canvasHeight: "+canvasHeight);
-
-	console.log("ratio: "+ratio);
-
 	canvas.width = canvasWidth;
 	canvas.height = canvasHeight;
 
@@ -90,7 +82,7 @@ window.onload = function () {
 
 	bgRatio = backgroundImage.width / backgroundImage.height;
 
-	// ratio = 1;
+	ratio = 1;
 
 	JUMP_AMPLITUDE *= ratio;
 
@@ -108,8 +100,7 @@ function gameStateInit () {
 }
 
 function goToMenu () {
-
-
+	
 	display = menuLoop;
 	eventHandler = menuClickEventHandler;
 	gameOver = false;
@@ -125,9 +116,7 @@ function menuClickEventHandler (event) {
 }
 
 function newGame () {
-	currentLevel = level4;
-
-
+	currentLevel = level2;
 	display = gameLoop;
 	eventHandler = function  () {
 		
@@ -147,11 +136,7 @@ function newGame () {
 	// groundTileImage.src = 
 	platFormTileImage = new Image();
 	// platFormTileImage.src = 
-	levelParser = new  LevelParser();
-
-	levelParser.parseTiles(currentLevel);
-
-	savectx();
+	ParseTiles();
 }
 
 function manageScore () {
@@ -175,24 +160,21 @@ function displayHud () {
 }
 
 function endGameOver (arg) {
-
-
 	if(arg)
 	{
 		clearTimeout(gameOverTimeout);
 	}
-
-	restctx();
-
 	goToMenu();
 }
 
 
 function death () {
 	currentLevel = 1;
+
 	gameOver = true;
-	eventHandler = endGameOver;
 	gameOverTimeout = setTimeout(5000,endGameOver);
+
+	eventHandler = endGameOver;
 }
 
 
@@ -239,27 +221,34 @@ function menuLoop () {
 
 function gameLoop () {
 
-	if (hero.x > 300 && hero.x < 2000){mouvectx();};
+	if (hero.x > 0 && hero.x < 1800){mouvectx();};
 
 	oldheroX= hero.x
 
 	context.fillStyle = "#000000";
 
-	context.fillRect(0,0,10000,10000);
+	context.fillRect(conteurctx,0,2000,2000);
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
 	hero.update();
 
 	paralax();
-
+	
+	for (var i = 0; i < balles.length; i++) {
+		balles[i].draw();
+		balles[i].move();
+	}
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< enemies.length; j++) {
+			console.log(isColliding(balles[i].box,enemies[j].box))
+			if (isColliding(balles[i].box,enemies[j].box)){balles.splice(i,1);i--}
+		}
+	};
 	for(var i = enemies.length - 1; i >= 0; i--) {
 		enemies[i].update();
 		enemies[i].draw();
 	};
-
-	hero.draw();
-
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
 	};
@@ -269,7 +258,43 @@ function gameLoop () {
 	for (var i = platFormTiles.length - 1; i >= 0; i--) {
 		platFormTiles[i].draw();
 	};
+	paralaxF();
+	
+
+	hero.draw();
+
 	manageScore();
+
 	displayHud();
+	
 }
 
+function ParseTiles () {
+	wallTiles = new Array();
+	groundTiles = new Array();
+	platFormTiles = new Array();
+	enemies = new Array();
+
+	for (var i = currentLevel.length - 1; i >= 0; i--) {
+			for (var j = currentLevel[i].length - 1; j >= 0; j--) {
+				switch(currentLevel[i][j])
+				{
+					case 2:
+						wallTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,wallTileImage));
+						break;
+					case 1:
+						groundTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,groundTileImage));
+						break;
+					case 3:
+						platFormTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,platFormTileImage))
+						break;
+					case "x":
+						hero = new Hero(j * 32 * ratio, i * 32 * ratio);
+						break;
+					case "z":
+						enemies.push(new Enemi(j * 32 * ratio, i * 32 * ratio,enemyImage));
+						break;
+				}
+			};
+		};
+}
