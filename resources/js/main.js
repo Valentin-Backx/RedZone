@@ -1,6 +1,7 @@
 var canvas,context;
 
 var canvasWidth,canvasHeight;
+var BASE_TILE_SIZE = 128;
 
 var bgRatio;
 
@@ -19,7 +20,7 @@ var hero;
 
 var FRAME_JUMP_DELAY = 10;
 
-var JUMP_AMPLITUDE = 200;
+var JUMP_AMPLITUDE = 500;
 
 var ACCELERATION = 8;
 var INERTIA_FRAME_DELAY = 5;
@@ -46,6 +47,7 @@ var vie =10
 var viebase =10
 var parasinc ;
 
+var levelParser;
 
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
@@ -72,6 +74,14 @@ window.onload = function () {
 		canvasHeight *= facto;
 	}
 
+	ratio = canvasWidth/1920;
+
+	console.log("calculated tile size: "+BASE_TILE_SIZE * ratio);
+
+	console.log("canvasHeight: "+canvasHeight);
+
+	console.log("ratio: "+ratio);
+
 	canvas.width = canvasWidth;
 	canvas.height = canvasHeight;
 
@@ -80,7 +90,7 @@ window.onload = function () {
 
 	bgRatio = backgroundImage.width / backgroundImage.height;
 
-	ratio = 1;
+	// ratio = 1;
 
 	JUMP_AMPLITUDE *= ratio;
 
@@ -98,7 +108,8 @@ function gameStateInit () {
 }
 
 function goToMenu () {
-	
+
+
 	display = menuLoop;
 	eventHandler = menuClickEventHandler;
 	gameOver = false;
@@ -114,7 +125,7 @@ function menuClickEventHandler (event) {
 }
 
 function newGame () {
-	currentLevel = level2;
+	currentLevel = level4;
 
 
 	display = gameLoop;
@@ -136,7 +147,11 @@ function newGame () {
 	// groundTileImage.src = 
 	platFormTileImage = new Image();
 	// platFormTileImage.src = 
-	ParseTiles();
+	levelParser = new  LevelParser();
+
+	levelParser.parseTiles(currentLevel);
+
+	savectx();
 }
 
 function manageScore () {
@@ -160,21 +175,24 @@ function displayHud () {
 }
 
 function endGameOver (arg) {
+
+
 	if(arg)
 	{
 		clearTimeout(gameOverTimeout);
 	}
+
+	restctx();
+
 	goToMenu();
 }
 
 
 function death () {
 	currentLevel = 1;
-
 	gameOver = true;
-	gameOverTimeout = setTimeout(5000,endGameOver);
-
 	eventHandler = endGameOver;
+	gameOverTimeout = setTimeout(5000,endGameOver);
 }
 
 
@@ -255,32 +273,3 @@ function gameLoop () {
 	displayHud();
 }
 
-function ParseTiles () {
-	wallTiles = new Array();
-	groundTiles = new Array();
-	platFormTiles = new Array();
-	enemies = new Array();
-
-	for (var i = currentLevel.length - 1; i >= 0; i--) {
-			for (var j = currentLevel[i].length - 1; j >= 0; j--) {
-				switch(currentLevel[i][j])
-				{
-					case 2:
-						wallTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,wallTileImage));
-						break;
-					case 1:
-						groundTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,groundTileImage));
-						break;
-					case 3:
-						platFormTiles.push(new Tile(j * 32 * ratio, i * 32 * ratio,platFormTileImage))
-						break;
-					case "x":
-						hero = new Hero(j * 32 * ratio, i * 32 * ratio);
-						break;
-					case "z":
-						enemies.push(new Enemi(j * 32 * ratio, i * 32 * ratio,enemyImage));
-						break;
-				}
-			};
-		};
-}

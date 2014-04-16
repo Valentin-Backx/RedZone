@@ -7,14 +7,14 @@
 function paralax (){
 	var bgXV2 =0;
 	var bgXV =0;
-	if (oldheroX == hero.x){console.log("lol")}
+	if (oldheroX == hero.x){/*console.log("lol")*/}
 		else if(parasinc == 1)
 		{
 			bgXV2-=((oldheroX)-hero.x)+1;
 			bgXV-=((oldheroX)-hero.x)+8;
 			if (bg2X <= conteurctx-bg2.width) {bg2X=0+conteurctx;}
 			if (bg1X <= conteurctx-bg1.width) {bg1X=0+conteurctx;}
-	console.log(parasinc)
+	// console.log(parasinc)
 
 		}
 		else if(parasinc == -1)
@@ -23,7 +23,7 @@ function paralax (){
 			bgXV-=((oldheroX)-hero.x)-8;
 			if (bg2X >= conteurctx+bg2.width) {bg2X=0+conteurctx;}
 			if (bg1X >= conteurctx+bg1.width) {bg1X=0+conteurctx;}
-	console.log(parasinc)
+	// console.log(parasinc)
 
 		}
 	if (parasinc ==1 || parasinc==-1){parasinc=0};
