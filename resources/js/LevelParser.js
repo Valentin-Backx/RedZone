@@ -34,6 +34,9 @@ function LevelParser () {
 	this.wallC = new Image();
 	this.wallC.src = "resources/images/tiles/wallC.png";
 
+	this.enemyA = new Image();
+	this.enemyA.src = "resources/images/testmonstrea.png";
+
 
 	this.parseTiles = function  (level) {
 		wallTiles = new Array();
@@ -77,7 +80,7 @@ function LevelParser () {
 							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE);
 							break;
 						case "z":
-							enemies.push(new Enemi(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,enemyImage));
+							this.parseEnemy(i,j);
 							break;
 					}
 				};
@@ -92,18 +95,38 @@ function LevelParser () {
 		var nCurrentMiddleTiles = 0;
 
 		//push first tile
-		platFormTiles.push(new Tile(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,eval("this.platform"+platformType+"_3")));
+		platFormTiles.push(new Tile(
+			j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,
+			eval("this.platform"+platformType+"_3"),
+			new Box(
+				j * BASE_TILE_SIZE * ratio,
+				i * BASE_TILE_SIZE * ratio + 47 * ratio , 
+				BASE_TILE_SIZE * ratio, 
+				43 * ratio 
+				)
+			)
+		);
 
 		// console.log("platformsize: "+platformSize);
 		while(nCurrentMiddleTiles < platformSize - 2)
 		{
 			// console.log("eval: "+eval("this.platform"+platformType+"_"+(nCurrentMiddleTiles % 2 + 1)).width);
 
-
 			// console.log("j: "+(j - nCurrentMiddleTiles - 1));
 			// console.log(nCurrentMiddleTiles);
 			
-			var tile = new Tile((j - nCurrentMiddleTiles - 1) * BASE_TILE_SIZE, i * BASE_TILE_SIZE,eval("this.platform"+platformType+"_"+((nCurrentMiddleTiles+1) % 2 + 1)),(j - nCurrentMiddleTiles - 1))
+			var box =new Box(
+						(j - nCurrentMiddleTiles - 1) * BASE_TILE_SIZE * ratio,
+						i * BASE_TILE_SIZE * ratio + 47 * ratio,
+						BASE_TILE_SIZE * ratio,
+						43*ratio
+					);
+
+			var tile = new Tile(
+					(j - nCurrentMiddleTiles - 1) * BASE_TILE_SIZE,
+					i * BASE_TILE_SIZE,eval("this.platform"+platformType+"_"+((nCurrentMiddleTiles+1) % 2 + 1)),
+					box
+			);
 
 			platFormTiles.push(tile);
 
@@ -113,8 +136,24 @@ function LevelParser () {
 			// nCurrentMiddleTiles % 2 + 1
 			nCurrentMiddleTiles++;
 		}
-		platFormTiles.push(new Tile((j - platformSize + 1) * BASE_TILE_SIZE, i * BASE_TILE_SIZE,eval("this.platform"+platformType+"_0")));
+		platFormTiles.push(new Tile(
+			(j - platformSize + 1) * BASE_TILE_SIZE,
+			 i * BASE_TILE_SIZE,
+			 eval("this.platform"+platformType+"_0"),
+				new Box((j - platformSize + 1)* BASE_TILE_SIZE * ratio,i * BASE_TILE_SIZE * ratio + 47 * ratio , BASE_TILE_SIZE * ratio, 43 * ratio )
+			 )
+		);
 
 		return platformSize;
+	}
+
+	this.parseEnemy = function(i,j) {
+		var newEnemy = new Enemi(
+			j * BASE_TILE_SIZE,
+			i * BASE_TILE_SIZE,
+			this.enemyA,
+			jsonLoader.monstreAJson.frames);
+		
+		enemies.push(newEnemy);
 	}
 }

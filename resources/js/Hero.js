@@ -127,7 +127,6 @@ Hero.prototype.adjustJumpPos = function() {
 
 	this.previousJumpHeight = newJumpHeight;
 
-
 	if(this.currentJumpFrameCounter / FRAME_JUMP_DELAY >= Math.PI / 2)
 	{
 		this.endJump();

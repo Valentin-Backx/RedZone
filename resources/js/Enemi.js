@@ -1,19 +1,19 @@
-function Enemi (x,y,image) {
+function Enemi (x,y,image,frames) {
 	this.y = y * ratio;
 	this.x = x * ratio;
 
-	this.w = 32 * ratio;//remplacer 32 par taille réelle
-	this.h = 32 * ratio;//remplacer 32 par taille réelle
+	this.w = 256 * ratio;//remplacer 32 par taille réelle
+	this.h = 256 * ratio;//remplacer 32 par taille réelle
 
 	this.speed = 5 * ratio;
 
 	this.life = 10;
 
 	this.attackRange = 25 * ratio;
-	this.orientation = 1;
+	this.lookToward = 1;
 
 	this.image = image;
-	this.box = new Box(this.x,this.y,32 * ratio,32 * ratio);//remplacer 32 par hitbox réelle du bonhomme
+	this.box = new Box(this.x,this.y,256 * ratio,256 * ratio);//remplacer 32 par hitbox réelle du bonhomme
 
 	this.updateCalls = [this.onScreen];
 	this.meleeForce = 1;//debug
@@ -24,24 +24,22 @@ function Enemi (x,y,image) {
 
 	if(this.extendedConstructor)
 	{
-		this.extendedConstructor();
+		this.extendedConstructor(frames);
 	}
+
+	this.frameIndex = 0;
 }
 
 AddGravityBehavior(Enemi);
 AddCollisionSidesCapabilities(Enemi);
 AddSideMoveCapabilities(Enemi);
 AddAttackAbility(Enemi);
+AddDrawAnility(Enemi);
 
 Enemi.prototype.update = function() {
 	for (var i = this.updateCalls.length - 1; i >= 0; i--) {
 		this.updateCalls[i].call(this);
 	};
-};
-
-Enemi.prototype.draw = function() {
-	context.strokeStyle = "#FF0000";
-	context.strokeRect(this.x,this.y,this.w,this.h);	
 };
 
 Enemi.prototype.onScreen = function() {
@@ -54,7 +52,7 @@ Enemi.prototype.onScreen = function() {
 Enemi.prototype.playerInSightBehavior = function() {
 	if(this.x < hero.x)
 	{
-		this.orientation = 1;
+		this.lookToward = 1;
 		if(this.x+this.w+this.attackRange > hero.x) // a portée d'attaque
 		{
 			this.meleeAttack();
@@ -65,7 +63,7 @@ Enemi.prototype.playerInSightBehavior = function() {
 		}
 	}else
 	{
-		this.orientation = -1;
+		this.lookToward = -1;
 		if(this.x - this.attackRange < hero.x + hero.w)//a portée
 		{
 			this.meleeAttack();

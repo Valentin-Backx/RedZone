@@ -1,6 +1,6 @@
 function AddGravityBehavior (object) {
 	
-	object.prototype.extendedConstructor = function() {
+	object.prototype.extendedConstructor = function(frames) {
 
 		this.downWardSpeed = 0;
 		this.gravityAcceleration = 3 * ratio;
@@ -9,6 +9,13 @@ function AddGravityBehavior (object) {
 		this.lookToward = 1;
 		this.inertia = 0;
 		this.inertiaFrameCounter = 0;
+
+		this.lastFrameTime = new Date().getTime();
+		this.timeSinceAnimStarted = 0;
+		this.totalTimeAnim = 1000; //override
+		this.frames = frames;
+		if(this.frames) this.numberOfFrames = this.frames.length; //virer le test quand le hero aura ses frames aussi
+
 	};	
 
 
@@ -91,15 +98,14 @@ function AddSideMoveCapabilities (object) {
 
 		if(tileCollided)
 		{
-			this.box.x = this.box.x < tileCollided.box.x ? tileCollided.box.x - this.box.w - 1 : tileCollided.box.x+tileCollided.box.w+1;
+			//this.box.x = this.box.x < tileCollided.box.x ? tileCollided.box.x - this.box.w - 1 : tileCollided.box.x+tileCollided.box.w+1;
 			this.x = this.box.x;
-			return false;	
+			return false;
 		}
 
 		this.x = this.box.x;
 		return true;
 	};
-	
 }
 
 function AddCollisionSidesCapabilities (object) {
@@ -136,5 +142,40 @@ function AddAttackAbility(object) {
 				targets[i].damage(this.meleeForce);
 			}
 		};
+	};
+}
+
+function AddDrawAnility(object)  {
+	object.prototype.draw = function() {
+
+		  // console.log(new Date().getTime() - this.timeSinceAnimStarted);
+		  
+		var dateTime = new Date().getTime();
+
+		var dt = (dateTime - this.lastFrameTime);
+
+		this.lastFrameTime = dateTime;
+
+		this.timeSinceAnimStarted += dt;
+
+		this.timeSinceAnimStarted %= this.totalTimeAnim;
+
+		var frame = this.frames[(this.timeSinceAnimStarted / (this.totalTimeAnim / this.numberOfFrames)) | 0];
+
+		context.save();
+		context.scale(this.lookToward,1);
+			context.drawImage(
+				this.image,
+				frame.frame.x,
+				frame.frame.y,
+				frame.frame.w,
+				frame.frame.h,
+				this.x * this.lookToward,
+				this.y,
+				frame.frame.w * ratio* this.lookToward,
+				frame.frame.h*ratio
+				);
+		context.restore();
+		// this.box.debugDraw();
 	};
 }

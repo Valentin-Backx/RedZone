@@ -52,6 +52,8 @@ var levelParser;
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
 
+var jsonLoader = new JSONLoader("resources/json/testmonstrea.json");
+;
 
 window.onload = function () {
 	canvas = document.getElementById("canvas");
@@ -253,12 +255,7 @@ function gameLoop () {
 
 	paralax();
 
-	for(var i = enemies.length - 1; i >= 0; i--) {
-		enemies[i].update();
-		enemies[i].draw();
-	};
 
-	hero.draw();
 
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
@@ -269,6 +266,14 @@ function gameLoop () {
 	for (var i = platFormTiles.length - 1; i >= 0; i--) {
 		platFormTiles[i].draw();
 	};
+
+
+	hero.draw();
+	for(var i = enemies.length - 1; i >= 0; i--) {
+		enemies[i].update();
+		enemies[i].draw();
+	};
+
 	manageScore();
 	displayHud();
 }

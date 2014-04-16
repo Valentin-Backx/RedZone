@@ -1,4 +1,4 @@
-function Tile (x,y,image,j) {
+function Tile (x,y,image,box) {
 	this.x = x * ratio;
 	this.y = y * ratio;
 	this.w = BASE_TILE_SIZE * ratio;
@@ -7,18 +7,21 @@ function Tile (x,y,image,j) {
 	// this.width = image.width * ratio;
 	// this.height = image.height * ratio;
 
-	this.box = new Box(this.x,this.y,this.w, this.h);
-	if(j==5||j==6)
+	if(box)
 	{
-		// console.log("this.x: "+this.x+" this.y: "+this.y+" this.w: "+this.w+" this.h: "+this.h);
-		// console.log("image: "+this.image);
+		this.box = box;//overriding default generated box
+	
+	}else
+	{
+		this.box = new Box(this.x,this.y,this.w, this.h);	
 	}
-	// console.log("image: "+image);
+	
+	// console.log(this.box)
+
 	this.image = image;
 }
 
 Tile.prototype.draw = function() {
-	// context.drawImage
 	if(!this.image){
 		context.fillStyle = "#FF0000";
 		context.fillRect(this.x,this.y,this.w,this.h);
