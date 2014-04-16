@@ -114,7 +114,9 @@ function menuClickEventHandler (event) {
 }
 
 function newGame () {
-	currentLevel = level1;
+	// currentLevel = level1;
+	currentLevel = level2;
+
 	display = gameLoop;
 	eventHandler = function  () {
 		
