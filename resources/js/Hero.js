@@ -38,10 +38,12 @@ function Hero (x,y,image) {
 				that.jump();
 				break; 
 			case 37:
+				parasinc=1
 				that.controls.left = true;
 				that.lastControl = -1;
 			break;
 			case 39:
+				parasinc=-1
 				that.controls.right = true;
 				that.lastControl = 1;
 			break;

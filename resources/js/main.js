@@ -114,7 +114,7 @@ function menuClickEventHandler (event) {
 }
 
 function newGame () {
-	currentLevel = level1;
+	currentLevel = level2;
 	display = gameLoop;
 	eventHandler = function  () {
 		
@@ -226,8 +226,6 @@ function gameLoop () {
 	context.fillStyle = "#000000";
 
 	context.fillRect(0,0,10000,10000);
-
-	context.fillRect(0,0,canvasWidth,canvasHeight);
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
