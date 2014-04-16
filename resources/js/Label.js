@@ -11,7 +11,7 @@ Label.prototype.draw = function() {
 	// console.log("x: "+this.x+" y: "+this.y+" w: "+this.w+" h: "+this.h+" text: "+this.text);
 
 	context.strokeStyle = "#0000FF";
-	context.strokeRect(this.x,this.y,this.w,this.h);
-	context.strokeText(this.text,this.x,this.y);	
+	context.strokeRect(this.x+conteurctx,this.y,this.w,this.h);
+	context.strokeText(this.text,this.x+conteurctx,this.y);	
 };
 
