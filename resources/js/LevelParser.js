@@ -40,6 +40,9 @@ function LevelParser () {
 	this.heroImage = new Image();
 	this.heroImage.src = "resources/images/hero.png";
 
+	this.sautFrappesImage = new Image();
+	this.sautFrappesImage.src = "resources/images/saut+frappe.png";
+
 
 	this.parseTiles = function  (level) {
 		wallTiles = new Array();
@@ -80,7 +83,7 @@ function LevelParser () {
 							j -= this.parsePlatform(i,j,level[i][j]) - 1;
 							break;
 						case "x":
-							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,this.heroImage,heroFrames);
+							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,this.heroImage,heroFrames,this.sautFrappesImage);
 							break;
 						case "z":
 							this.parseEnemy(i,j);

@@ -299,6 +299,10 @@ function gameLoop () {
 		};
 	paralaxF();
 	manageScore();
-	displayHud();	
+	displayHud();
+
+	for (var i = debugCollision.length - 1; i >= 0; i--) {
+		debugCollision[i].debugDraw();
+	};
 }
 

@@ -48,3 +48,5 @@ function isCollidingBottom (firstBox,secondBox) {
 	else
 		return false;	
 }
+
+var debugCollision = [];

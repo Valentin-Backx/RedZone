@@ -6,6 +6,6 @@ function Box (x,y,w,h) {
 }
 
 Box.prototype.debugDraw = function() {
-	context.fillStyle ="#FFFFFF";
-	context.fillRect(this.x,this.y,this.w,this.h);
+	context.strokeStyle ="#FFFFFF";
+	context.strokeRect(this.x,this.y,this.w,this.h);
 };

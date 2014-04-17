@@ -1,4 +1,4 @@
-function Hero (x,y,image,frames) {
+function Hero (x,y,image,frames,sautFrappeImage) {
 
 	var that = this;
 	if(!this.currentGamepad)
@@ -59,10 +59,18 @@ function Hero (x,y,image,frames) {
 
 	this.x = x * ratio;
 	this.y = y * ratio;
-	this.w = 128 * ratio; //remplacer 32 par la taille réelle du sprite hero
-	this.h = 128 * ratio; //remplacer 32 par la taille réelle du sprite hero
+	this.w = 256 * ratio; //remplacer 32 par la taille réelle du sprite hero
+	this.h = 256 * ratio; //remplacer 32 par la taille réelle du sprite hero
 	this.image = image;
-	this.box = new Box(this.x,this.y,this.w,this.h);//remplacer 32 par la taille réelle de la hitbox du hero
+	this.currentImage = image;
+	this.sautFrappeImage = sautFrappeImage;
+	this.box = new Box(this.x,this.y,this.w / 2,this.h);//remplacer 32 par la taille réelle de la hitbox du hero
+
+	// debugCollision.push(this.box);
+	this.rageTimer = 80000;
+	this.currentRageTimer = 0;
+	this.previousFrameRageTimer;
+	this.rageTimerOn = false;
 
 	this.touchGround = false;
 	this.currentJumpFrameCounter = 0;
@@ -80,66 +88,120 @@ function Hero (x,y,image,frames) {
 	this.life = 200;
 
 
-	this.attackRange = 50 * ratio;
+	this.attackRange = 65 * ratio;
 	this.orientation = 1;
 
-	this.meleeWeaponHeight = 1 * ratio;
-	this.meleeWeaponWidth = 10 * ratio;
+	this.meleeWeaponHeight = -145 * ratio;
+	this.meleeWeaponWidth = 15 * ratio;
 	this.meleeForce = 10;
 	this.state = new State(
 		{
 			"IDLE" : 
 			{
 				"act" : this.idleAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
+				"onExit" : []
+			},
+			"IDLE_RAGE" : 
+			{
+				"act" : this.idleRageAnimate,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
 				"onExit" : []
 			},
 			"IDLE_ATTACK" :
 			{
-				"act" : this.attackAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"act" : this.meleeAttackAnimate,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
+				"onExit" : []
+			},
+			"IDLE_ATTACK_RAGE" :
+			{
+				"act" : this.idleAttackAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
 				"onExit" : []
 			},
 			"IDLE_SHOOT" :
 			{
 				"act" : this.shootAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
+				"onExit" : []
+			},
+			"IDLE_SHOOT_RAGE" :
+			{
+				"act" : this.idleShootAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
 				"onExit" : []
 			},
 			"RUN" : 
 			{
 				"act" : this.runAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
+				"onExit" : []
+			},
+			"RUN_RAGE" : 
+			{
+				"act" : this.runAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
 				"onExit" : []
 			},
 			"RUN_ATTACK" : 
 			{
 				"act" : this.runMeleeAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
+				"onExit" : []
+			},
+			"RUN_ATTACK_RAGE" : 
+			{
+				"act" : this.runAttackAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
 				"onExit" : []
 			},
 			"RUN_SHOOT" : 
 			{
 				"act" : this.runShootAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
+				"onExit" : []
+			},
+			"RUN_SHOOT_RAGE" : 
+			{
+				"act" : this.runShootAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
 				"onExit" : []
 			},
 			"JUMP" :
 			{
 				"act" : this.jumpAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
+				"onExit" : []
+			},
+			"JUMP_RAGE" :
+			{
+				"act" : this.jumpAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus],
 				"onExit" : []
 			},
 			"JUMP_ATTACK" :
 			{
 				"act" : this.jumpMeleAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
+				"onExit" : []
+			},
+			"JUMP_ATTACK_RAGE" :
+			{
+				"act" : this.jumpAttackAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
 				"onExit" : []
 			},
 			"JUMP_SHOOT" :
 			{
 				"act" : this.jumpShootAnimate,
-				"onEnter" : [this.enterNewAnimation],
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
+				"onExit" : []
+			},
+			"JUMP_SHOOT_RAGE" :
+			{
+				"act" : this.jumpShootAnimateRage,
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
 				"onExit" : []
 			}
 		}
@@ -147,9 +209,9 @@ function Hero (x,y,image,frames) {
 	);
 
 	/*========================ANIMATIONS DURATIONS AND NUMBER OF FRAMES================================*/
-	this.totalIdleAnimTime = 200;
+	this.totalIdleAnimTime = 500;
 	this.nFramesIdleAnim = this.frames.repos.length;
-	this.totalIdleAttackAnimTime = 200;
+	this.totalIdleAttackAnimTime = 300;
 	this.nFramesIdleAttackAnim = this.frames.reposFrappe.length;
 	this.totalIdleAttackAnimTime_rage = 100;
 	this.nFramesIdleAttackAnim_rage = this.frames.reposFrappeRage.length;
@@ -158,11 +220,11 @@ function Hero (x,y,image,frames) {
 	this.totalIdleShootAnimTime_rage = 100;
 	this.nFramesIdleShootAnim_rage = this.frames.reposTirRage.length;
 
-	this.totalRunAnimTime = 200;
+	this.totalRunAnimTime = 400;
 	this.nFramesRunAnim = this.frames.course.length;
 	this.totalRunAnimTime_rage = 100;
 	this.nFramesRunAnim_rage = this.frames.courseRage.length;
-	this.totalRunattackAnimTime = 200;
+	this.totalRunattackAnimTime = 300;
 	this.nFramesRunAttackAnim = this.frames.courseFrappe.length;
 	this.totalRunattackAnimTime_rage = 100;
 	this.nFramesRunAttackAnim_rage = this.frames.courseFrappeRage.length;
@@ -171,16 +233,26 @@ function Hero (x,y,image,frames) {
 	this.totalRunShootAnimTime_rage = 100;
 	this.nFramesRunShootAnim_rage = this.frames.courseTirRage.length;
 
-	this.totalJumpAnimTime = 200;
+	this.totalJumpAnimTime = 250;
 	this.nFramesJumpAnim = this.frames.saut.length;
-	// this.totalJumpAttackAnimTime = 200;
-	// this.nFramesJumpAttackAnim = this.frames.sautFrappe.length;
-	// this.totalJumpAttackAnimTime_rage = 100;
-	// this.nFramesJumpAttackAnim_rage = this.frames.sautFrappeRage.length;
+	this.totalJumpAnimTime_rage = 250;
+	this.nFramesJumpAnim_rage = this.frames.sautRage.length;
+
+	this.totalJumpAttackAnimTime = 200;
+	this.nFramesJumpAttackAnim = this.frames.sautFrappe.length;
+	this.totalJumpAttackAnimTime_rage = 100;
+	this.nFramesJumpAttackAnim_rage = this.frames.sautFrappeRage.length;
+
+
 	this.totalJumpShootAnimTime = 200;
 	this.nFramesJumpShootAnim = this.frames.sautTir.length;
 	this.totalJumpShootAnimTime_rage = 100;
 	this.nFramesJumpShootAnim_rage = this.frames.sautTirRage.length;
+
+	this.totalHurtTime = 150;
+	this.nFramesHurtAnim = this.frames.blessure.length;
+	this.totalHurtTime_rage = 100;
+	this.nFramesHurtAnim_rage = this.frames.blessureRage.length;
 	/*================END ANIMATIONS DURATIONS AND FRAMES=================*/
 	var that = this;
 	
@@ -194,12 +266,12 @@ function Hero (x,y,image,frames) {
 AddGravityBehavior(Hero);
 AddCollisionSidesCapabilities(Hero);
 AddSideMoveCapabilities(Hero);
-AddAttackAbility(Hero);
 AddUpdateAbility(Hero);
 AddAnimateAbilities(Hero);
-
+AddDrawAnility(Hero);
 
 Hero.prototype.control = function() {
+
 
 	if(this.currentGamepad)
 	{
@@ -256,29 +328,42 @@ Hero.prototype.endJump = function() {
 	this.jumping = false;
 	// this.touchGround = true;
 	this.currentJumpFrameCounter = 0;
-	this.previousJumpHeight = 0;	
+	this.previousJumpHeight = 0;
+	// if(this.state.currentState=="JUMP")
+	// {
+		if(this.rageTimerOn)
+		{
+			this.state.gotoState("IDLE_RAGE");
+		}else{
+			this.state.gotoState("IDLE");
+		}
 };
 
 Hero.prototype.jump = function() {
+	this.surchau+= this.rageTimerOn?0:4;
 	if(this.touchGround)
 	{
 		this.touchGround = false;
 		this.jumping = true;
+		if(this.rageTimerOn)
+		{
+			this.state.gotoState("JUMP_RAGE");
+		}else
+		{
+			this.state.gotoState("JUMP");	
+		}
 	}
-};
-
-Hero.prototype.draw = function() {
-	context.strokeStyle = "#FFFFFF";
-	context.strokeRect(this.x,this.y,this.w,this.h);
-	this.box.debugDraw();
 };
 
 Hero.prototype.damage = function(damage) {
 	this.life -= damage;
+	this.surchau+= this.rageTimerOn?0:damage;
+
 	if(this.life<=0)
 	{
 		if(!gameOver)
 		{
+			this.speed = 0;
 			death();	
 		}
 	}
@@ -288,22 +373,26 @@ Hero.prototype.getTargets = function() {
 	return enemies;
 };
 
-Hero.prototype.attackAnimate = function() {
-	this.timeSinceAnimStarted %= this.totalIdleAnim;
-	this.currentFrame = this.frames[(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];		
-};
-
-Hero.prototype.moveAnimate = function() {
-	this.timeSinceAnimStarted %= this.totalIdleAnim;
-	this.currentFrame = this.frames[(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];		
-};
-
-Hero.prototype.idleAnimate = function() {
-	// console.log("tata");
-};
 Hero.prototype.fire = function() {
-	balles.push(new balle(this.x+this.w/2,this.y,this.lookToward))
+	this.surchau+=this.rageTimerOn?0:10;
+	switch(this.state.currentState)
+	{
+		case "IDLE":
+			this.state.gotoState("IDLE_SHOOT");
+			break;
+		case "RUN":
+			this.state.gotoState("RUN_SHOOT");
+			break;
+		case "JUMP":
+			this.state.gotoState("JUMP_SHOOT");
+			break;
+	}
 }
+
+Hero.prototype.shootBullet = function() {
+	balles.push(new balle(this.x+this.w/2,this.y,this.lookToward));
+};
+
 Hero.prototype.surchauffe = function() {
 	if (compt % 120 == 0) 
 	{
@@ -324,59 +413,390 @@ Hero.prototype.surchauffe = function() {
 	{this.inertia=this.speed * this.lookToward;}
 }
 
+Hero.prototype.meleeAttack = function() {
+	this.surchau+=this.rageTimerOn?0:10;
+	switch(this.state.currentState)
+	{
+		case "IDLE":
+			this.state.gotoState("IDLE_ATTACK");
+			break;
+		case "RUN":
+			this.state.gotoState("RUN_ATTACK");
+			break;
+	}
+	
+
+};
+
+Hero.prototype.calculateMeleeHit = function() {
+	var hitBox = new Box(
+			this.lookToward<0?this.x - this.attackRange:this.x+this.w/2,
+			this.y - this.meleeWeaponHeight,
+			this.attackRange,
+			this.meleeWeaponWidth
+		);
+
+
+	var targets = this.getTargets();
+
+	for (var i = targets.length - 1; i >= 0; i--) {
+
+		if(isColliding(targets[i].box,hitBox))
+		{
+			targets[i].damage(this.meleeForce);
+		}
+	};	
+};
+
+Hero.prototype.enterMeleeAttackState = function() {
+	this.enemyHit = false;
+};
+
 Hero.prototype.idleAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalIdleAnimTime;
-	this.currentFrame = this.frames["repos"][(this.timeSinceAnimStarted / (this.totalIdleAnimTime / this.numberOfFrameIdle)) | 0];	
+	this.currentFrame = this.frames["repos"][(this.timeSinceAnimStarted / (this.totalIdleAnimTime / this.nFramesIdleAnim)) | 0];
+
+	if(this.lastControl!=0)
+	{
+		this.state.gotoState("RUN");
+	}	
 };
 
 Hero.prototype.meleeAttackAnimate = function() {
-	this.timeSinceAnimStarted %= this.totalIdleAnim;
-	this.currentFrame = this.frames["reposFrappe"][(this.timeSinceAnimStarted / (this.totalIdleAttackAnimTime / this.numberOfFrameIdle)) | 0];		
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalIdleAttackAnimTime;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalIdleAttackAnimTime / this.nFramesIdleAttackAnim)) | 0;
+
+	this.currentFrame = this.frames["reposFrappe"][indexFrame];		
+
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+
+	if(indexFrame == this.nFramesIdleAttackAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}
 };
 
 Hero.prototype.shootAnimate = function() {
-	this.timeSinceAnimStarted %= this.totalIdleAttackAnimTime;
-	this.currentFrame = this.frames["reposTir"][(this.timeSinceAnimStarted / (this.totalIdleShootAnimTime / this.numberOfFrameIdle)) | 0];	
-	
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalIdleShootAnimTime;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalIdleShootAnimTime / this.nFramesIdleShootAnim)) | 0;
+
+	this.currentFrame = this.frames["reposTir"][indexFrame];
+
+	if(indexFrame == 2&&!this.bulletPushed){
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+
+	if(indexFrame == this.nFramesIdleShootAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}
+};
+
+Hero.prototype.shootAnimateEnter = function() {
+	this.currentImage = this.image;
+	this.bulletPushed = false;
 };
 
 Hero.prototype.runAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalRunAnimTime;
-	this.currentFrame = this.frames["course"][(this.timeSinceAnimStarted / (this.totalRunAnimTime / this.numberOfFrameIdle)) | 0];		
+	this.currentFrame = this.frames["course"][(this.timeSinceAnimStarted / (this.totalRunAnimTime / this.nFramesRunAnim)) | 0];
+	if(this.lastControl == 0)
+	{
+		this.state.gotoState("IDLE");
+	}
 };
 
 Hero.prototype.runShootAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalRunShootAnimTime;
-	this.currentFrame = this.frames["courseTir"][(this.timeSinceAnimStarted / (this.totalRunShootAnimTime / this.numberOfFrameIdle)) | 0];		
 	
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalRunShootAnimTime / this.nFramesRunShootAnim)) | 0;
+
+	this.currentFrame = this.frames["courseTir"][indexFrame];		
+	
+	if(indexFrame == 2&&!this.bulletPushed)
+	{
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+	if(indexFrame==this.nFramesRunShootAnim - 1)
+	{
+		this.state.gotoState("RUN");
+	}
+
 };
 
 Hero.prototype.runMeleeAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalRunattackAnimTime;
-	this.currentFrame = this.frames["courseFrappe"][(this.timeSinceAnimStarted / (this.totalRunattackAnimTime / this.numberOfFrameIdle)) | 0];		
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalRunattackAnimTime / this.nFramesRunAttackAnim)) | 0;
+	this.currentFrame = this.frames["courseFrappe"][indexFrame];
 	
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+	if(indexFrame == this.nFramesRunAttackAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}	
 };
 
 Hero.prototype.jumpAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalJumpAnimTime;
-	this.currentFrame = this.frames["saut"][(this.timeSinceAnimStarted / (this.totalJumpAnimTime / this.numberOfFrameIdle)) | 0];		
+	
+	// this.timeSinceAnimStarted = this.timeSinceAnimStarted>this.totalJumpAnimTime?this.totalJumpAnimTime:this.timeSinceAnimStarted;
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpAnimTime / this.nFramesJumpAnim)) | 0;
+	
+	this.currentFrame = this.frames["saut"][indexFrame];
+
 };
 
 Hero.prototype.jumpMeleAnimate = function() {
+	this.currentImage = this.sautFrappeImage;
 	this.timeSinceAnimStarted %= this.totalJumpAttackAnimTime;
-	this.currentFrame = this.frames["sautFrappe"][(this.timeSinceAnimStarted / (this.totalJumpAttackAnimTime / this.numberOfFrameIdle)) | 0];	
-	
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpAttackAnimTime / this.nFramesJumpAttackAnim)) | 0;
+
+	this.currentFrame = this.frames["sautFrappe"][indexFrame];
+
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+	if(indexFrame == this.nFramesJumpAttackAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}
 };
 
 Hero.prototype.jumpShootAnimate = function() {
+	this.currentImage = this.image;
 	this.timeSinceAnimStarted %= this.totalJumpShootAnimTime;
-	this.currentFrame = this.frames["sautTir"][(this.timeSinceAnimStarted / (this.totalJumpShootAnimTime / this.numberOfFrameIdle)) | 0];	
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpShootAnimTime / this.nFramesJumpShootAnim)) | 0;
+
+	if(indexFrame == 0&&!this.bulletPushed)
+	{
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+	if(indexFrame == this.nFramesJumpShootAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}	
+	this.currentFrame = this.frames["sautTir"][indexFrame];
 };
 
+Hero.prototype.hurtAnimate = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalHurtTime;
+	
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalHurtTime / this.nFramesHurtAnim)) | 0;
 
+	this.currentFrame = this.frames["blessure"][indexFrame];	
 
+	if(indexFrame == this.nFramesHurtAnim - 1)
+	{
+		this.state.gotoState("IDLE");
+	}
+};
 
+Hero.prototype.idleRageAnimate = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalHurtTime_rage;
 
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalHurtTime_rage / this.nFramesHurtAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["blessureRage"][indexFrame];
+
+	if(indexFrame == this.nFramesHurtAnim_rage)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}
+};
+
+Hero.prototype.idleAttackAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalIdleAttackAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalIdleAttackAnimTime_rage / this.nFramesIdleAttackAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["reposFrappeRage"][indexFrame];
+
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+	if(indexFrame == this.nFramesIdleAttackAnim_rage - 1)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}
+};
+
+Hero.prototype.idleShootAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalIdleShootAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalIdleShootAnimTime_rage / this.nFramesIdleShootAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["reposTirRage"][indexFrame];
+
+	if(indexFrame==0&&!this.bulletPushed)
+	{
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+	if(indexFrame==this.nFramesIdleShootAnim_rage - 1)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}
+};
+
+Hero.prototype.runAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalRunAnimTime_rage;
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalRunAnimTime_rage / this.nFramesRunAnim_rage)) | 0;
+	this.currentFrame = this.frames["courseRage"][indexFrame];
+	if(this.lastControl == 0)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}
+};
+
+Hero.prototype.runAttackAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalRunattackAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalRunattackAnimTime_rage / this.nFramesRunAttackAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["courseFrappeRage"][indexFrame];
+
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+	if(indexFrame == this.nFramesRunAttackAnim_rage - 1)
+	{
+		this.state.gotoState("RUN_RAGE");
+	}	
+};
+
+Hero.prototype.runShootAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalRunShootAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalRunShootAnimTime_rage / this.nFramesRunShootAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["courseTirRage"][indexFrame];
+
+	if(indexFrame==0&&!this.bulletPushed)
+	{
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+	if(indexFrame==this.nFramesRunShootAnim_rage - 1)
+	{
+		this.state.gotoState("RUN_RAGE");
+	}	
+};
+
+Hero.prototype.jumpAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalJumpAnimTime_rage;
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpAnimTime / this.nFramesJumpAnim_rage)) | 0;
+	this.currentFrame = this.frames["sautRage"][indexFrame];
+};
+
+Hero.prototype.jumpAttackAnimateRage = function() {
+	this.currentImage = this.sautFrappeImage;
+	this.timeSinceAnimStarted %= this.totalJumpAttackAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpAttackAnimTime_rage / this.nFramesJumpAttackAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["sautFrappeRage"][indexFrame];
+
+	if(indexFrame == 3&&!this.enemyHit)
+	{
+		this.enemyHit = true;
+		this.calculateMeleeHit();
+	}
+	if(indexFrame == this.nFramesJumpAttackAnim_rage - 1)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}	
+};
+
+Hero.prototype.jumpShootAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalJumpShootAnimTime_rage;
+
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalJumpShootAnimTime_rage / this.nFramesJumpShootAnim_rage)) | 0;
+
+	if(indexFrame == 0&&!this.bulletPushed)
+	{
+		this.bulletPushed = true;
+		this.shootBullet();
+	}
+	if(indexFrame == this.nFramesJumpShootAnim_rage - 1)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}	
+	this.currentFrame = this.frames["sautTirRage"][indexFrame];	
+};
+
+Hero.prototype.hurtAnimateRage = function() {
+	this.currentImage = this.image;
+	this.timeSinceAnimStarted %= this.totalHurtTime_rage;
+	
+	var indexFrame = (this.timeSinceAnimStarted / (this.totalHurtTime_rage / this.nFramesHurtAnim_rage)) | 0;
+
+	this.currentFrame = this.frames["blessureRage"][indexFrame];	
+
+	if(indexFrame == this.nFramesHurtAnim_rage - 1)
+	{
+		this.state.gotoState("IDLE_RAGE");
+	}	
+};
+
+Hero.prototype.checkRageStatus = function(nextState) {
+	if(this.surchau >= 100&&!this.rageTimerOn)
+	{
+		this.previousFrameRageTimer = new Date().getTime();
+		this.rageTimerOn = true;
+		this.state.gotoState(nextState+"_RAGE");
+	}
+	if(this.rageTimerOn)
+	{
+		var newDate = new Date().getTime();
+		this.currentRageTimer += newDate - this.previousFrameRageTimer;
+		if(this.currentRageTimer >= this.rageTimer)
+		{
+			this.surchau = 0;
+			this.currentRageTimer = 0;
+			this.rageTimerOn = false;
+			this.previousFrameRageTimer = 0;
+			this.state.gotoState(nextState.split("_RAGE")[0]);
+		}
+	}
+};
 
 /*===========================BALLE==============================*/
 function balle(x,y,direction){
@@ -387,10 +807,12 @@ function balle(x,y,direction){
 	this.direction = direction;
 	this.box = new Box(x,y,5 * ratio,5 * ratio);
 }
+
 balle.prototype.draw = function() {
 	context.strokeStyle = "#000000";
 	context.strokeRect(this.x,this.y,this.w,this.h);
 }
+
 balle.prototype.move = function() {
 	this.box.x = this.x+=this.direction*20;
 }

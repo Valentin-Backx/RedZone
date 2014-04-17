@@ -759,5 +759,59 @@ var heroFrames =
 				"spriteSourceSize": {"x":33,"y":0,"w":176,"h":232},
 				"sourceSize": {"w":256,"h":256}
 			}
+		],
+		"sautFrappe":
+		[
+			{
+				"filename": "Robot_Saut_frappe_frame1.png",
+				"frame": {"x":213,"y":236,"w":143,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			},
+			{
+				"filename": "Robot_Saut_frappe_frame2.png",
+				"frame": {"x":2,"y":236,"w":209,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":209,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			},
+			{
+				"filename": "Robot_Saut_frappe_frame3.png",
+				"frame": {"x":213,"y":236,"w":143,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			}		
+		],
+		"sautFrappeRage":
+		[
+			{
+				"filename": "Robot_saut_frappe_rage_frame1.png",
+				"frame": {"x":213,"y":2,"w":143,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			},
+			{
+				"filename": "Robot_saut_frappe_rage_frame2.png",
+				"frame": {"x":2,"y":2,"w":209,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":209,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			},
+			{
+				"filename": "Robot_saut_frappe_rage_frame3.png",
+				"frame": {"x":213,"y":2,"w":143,"h":232},
+				"rotated": false,
+				"trimmed": true,
+				"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+				"sourceSize": {"w":256,"h":256}
+			}		
 		]
 };

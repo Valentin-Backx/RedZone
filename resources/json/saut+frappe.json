@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "Robot_Saut_frappe_frame1.png",
+	"frame": {"x":213,"y":236,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_frappe_frame2.png",
+	"frame": {"x":2,"y":236,"w":209,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":209,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_frappe_frame3.png",
+	"frame": {"x":213,"y":236,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_saut_frappe_rage_frame1.png",
+	"frame": {"x":213,"y":2,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_saut_frappe_rage_frame2.png",
+	"frame": {"x":2,"y":2,"w":209,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":209,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_saut_frappe_rage_frame3.png",
+	"frame": {"x":213,"y":2,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "saut+frappe.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:096ec1628607338e072c3ce6afd8d199:b96da825ab6bdf3e7725b364c435dc3b:b0f177c8560b90de05bf1080717cdee9$"
+}
+}

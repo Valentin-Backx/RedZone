@@ -17,6 +17,7 @@ State.prototype.act = function() {
 };
 
 State.prototype.gotoState = function(nextState) {
+
 	if(this.currentState==nextState) return;
 	if(this.currentState != null)
 	{
@@ -30,6 +31,6 @@ State.prototype.gotoState = function(nextState) {
 	this.currentAct = this.states[nextState].act;
 
 	for (var i = this.states[nextState].onEnter.length - 1; i >= 0; i--) {
-		this.states[nextState].onEnter[i].call(this.context);
+		this.states[nextState].onEnter[i].call(this.context,nextState);
 	};
 };

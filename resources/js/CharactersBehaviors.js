@@ -38,6 +38,7 @@ function AddGravityBehavior (object) {
 		this.currentFrame;
 
 		this.outerForce = 0;
+		this.currentImage = this.image;
 	};	
 
 
@@ -63,6 +64,11 @@ function AddGravityBehavior (object) {
 		}
 
 		this.y+=this.downWardSpeed;
+
+		if(this.y > 10 * BASE_TILE_SIZE)
+		{
+			this.damage(1000000);
+		}
 	};
 
 	object.prototype.collisionLow = function(tilesArary){
@@ -177,33 +183,13 @@ function AddCollisionSidesCapabilities (object) {
 	};	
 }
 
-function AddAttackAbility(object) {
-	object.prototype.meleeAttack = function() {
-		var hitBox = new Box(
-				this.lookToward<0?this.x - this.attackRange:this.x+this.w,
-				this.y - this.meleeWeaponHeight,
-				this.attackRange,
-				this.meleeWeaponWidth
-			);
-
-		var targets = this.getTargets();
-
-		for (var i = targets.length - 1; i >= 0; i--) {
-
-			if(isColliding(targets[i].box,hitBox))
-			{
-				targets[i].damage(this.meleeForce);
-			}
-		};
-	};
-}
 
 function AddDrawAnility(object)  {
 	object.prototype.draw = function() {
 		context.save();
 		context.scale(this.lookToward,1);
 			context.drawImage(
-				this.image,
+				this.currentImage,
 				this.currentFrame.frame.x,
 				this.currentFrame.frame.y,
 				this.currentFrame.frame.w,

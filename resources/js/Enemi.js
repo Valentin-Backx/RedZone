@@ -86,7 +86,6 @@ function Enemi (x,y,image,frames) {
 AddGravityBehavior(Enemi);
 AddCollisionSidesCapabilities(Enemi);
 AddSideMoveCapabilities(Enemi);
-AddAttackAbility(Enemi);
 AddDrawAnility(Enemi);
 AddUpdateAbility(Enemi);
 AddAnimateAbilities(Enemi);
