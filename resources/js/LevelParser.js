@@ -37,6 +37,9 @@ function LevelParser () {
 	this.enemyA = new Image();
 	this.enemyA.src = "resources/images/monstrea.png";
 
+	this.heroImage = new Image();
+	this.heroImage.src = "resources/images/hero.png";
+
 
 	this.parseTiles = function  (level) {
 		wallTiles = new Array();
@@ -77,7 +80,7 @@ function LevelParser () {
 							j -= this.parsePlatform(i,j,level[i][j]) - 1;
 							break;
 						case "x":
-							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE);
+							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE,this.heroImage,heroFrames);
 							break;
 						case "z":
 							this.parseEnemy(i,j);

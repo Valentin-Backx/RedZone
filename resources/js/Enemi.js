@@ -42,7 +42,7 @@ function Enemi (x,y,image,frames) {
 
 
 	this.totalIdleAnim = 600; //override
-	if(this.frames) this.numberOfFrameIdle = this.frames.idle.length; //virer le test quand le hero aura ses frames aussi
+	this.numberOfFrameIdle = this.frames.idle.length; //virer le test quand le hero aura ses frames aussi
 
 	this.state = new State(
 		{
@@ -212,7 +212,6 @@ Enemi.prototype.moveAnimate = function() {
 };
 
 Enemi.prototype.idleAnimate = function() {
-
 	this.updateChargeTimer();
 	this.timeSinceAnimStarted %= this.totalIdleAnim;
 	this.currentFrame = this.frames["idle"][(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];

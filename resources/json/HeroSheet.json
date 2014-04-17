@@ -1,0 +1,580 @@
+{"frames": [
+
+{
+	"filename": "Robot_BlessureRage_Frame (1).png",
+	"frame": {"x":413,"y":730,"w":154,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":154,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Blessure_Frame (1).png",
+	"frame": {"x":413,"y":472,"w":154,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":154,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappeRage_Frame (1).png",
+	"frame": {"x":736,"y":728,"w":165,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":2,"w":165,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappeRage_Frame (2).png",
+	"frame": {"x":3004,"y":2,"w":165,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":4,"w":165,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappeRage_Frame (3).png",
+	"frame": {"x":2,"y":482,"w":231,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":10,"w":231,"h":230},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappeRage_Frame (4).png",
+	"frame": {"x":2336,"y":2,"w":165,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":165,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappeRage_Frame (5).png",
+	"frame": {"x":3527,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappe_Frame (1).png",
+	"frame": {"x":569,"y":716,"w":165,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":2,"w":165,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappe_Frame (2).png",
+	"frame": {"x":2837,"y":2,"w":165,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":4,"w":165,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappe_Frame (3).png",
+	"frame": {"x":235,"y":2,"w":231,"h":230},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":10,"w":231,"h":230},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappe_Frame (4).png",
+	"frame": {"x":2169,"y":2,"w":165,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":165,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseFrappe_Frame (5).png",
+	"frame": {"x":3349,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseRage_Frame (1).png",
+	"frame": {"x":3171,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseRage_Frame (2).png",
+	"frame": {"x":1657,"y":2,"w":176,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":176,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseRage_Frame (3).png",
+	"frame": {"x":3883,"y":2,"w":176,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":238},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseRage_Frame (4).png",
+	"frame": {"x":2002,"y":2,"w":165,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":165,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTirRage_Frame (1).png",
+	"frame": {"x":934,"y":2,"w":187,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":16,"w":187,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTirRage_Frame (2).png",
+	"frame": {"x":1301,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":16,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTirRage_Frame (3).png",
+	"frame": {"x":701,"y":2,"w":231,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":20,"w":231,"h":220},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTirRage_Frame (4).png",
+	"frame": {"x":2670,"y":2,"w":165,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":4,"w":165,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTirRage_Frame (5).png",
+	"frame": {"x":3171,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTir_Frame (1).png",
+	"frame": {"x":224,"y":714,"w":187,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":16,"w":187,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTir_Frame (2).png",
+	"frame": {"x":1123,"y":2,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":16,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTir_Frame (3).png",
+	"frame": {"x":468,"y":2,"w":231,"h":220},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":20,"w":231,"h":220},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTir_Frame (4).png",
+	"frame": {"x":2503,"y":2,"w":165,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":4,"w":165,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_CourseTir_Frame (5).png",
+	"frame": {"x":235,"y":472,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Course_Frame (1).png",
+	"frame": {"x":235,"y":472,"w":176,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Course_Frame (2).png",
+	"frame": {"x":1479,"y":2,"w":176,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":176,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Course_Frame (3).png",
+	"frame": {"x":3705,"y":2,"w":176,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":176,"h":238},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Course_Frame (4).png",
+	"frame": {"x":1835,"y":2,"w":165,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":165,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Rage_Frame (1).png",
+	"frame": {"x":457,"y":234,"w":165,"h":234},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":44,"y":21,"w":165,"h":234},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Rage_Frame (2).png",
+	"frame": {"x":2474,"y":260,"w":143,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":0,"w":143,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappeRage_Frame (1).png",
+	"frame": {"x":3344,"y":244,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappeRage_Frame (2).png",
+	"frame": {"x":569,"y":470,"w":165,"h":244},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":11,"w":165,"h":244},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappeRage_Frame (3).png",
+	"frame": {"x":2,"y":242,"w":231,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":17,"w":231,"h":238},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappeRage_Frame (4).png",
+	"frame": {"x":2909,"y":256,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappeRage_Frame (5).png",
+	"frame": {"x":3199,"y":244,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappe_Frame (1).png",
+	"frame": {"x":3054,"y":256,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappe_Frame (2).png",
+	"frame": {"x":624,"y":224,"w":165,"h":244},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":11,"w":165,"h":244},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappe_Frame (3).png",
+	"frame": {"x":2,"y":2,"w":231,"h":238},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":17,"w":231,"h":238},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappe_Frame (4).png",
+	"frame": {"x":2764,"y":256,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposFrappe_Frame (5).png",
+	"frame": {"x":1048,"y":728,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposRage_Frame (1).png",
+	"frame": {"x":903,"y":728,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposRage_Frame (2).png",
+	"frame": {"x":2619,"y":256,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposRage_Frame (3).png",
+	"frame": {"x":2184,"y":260,"w":143,"h":254},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":1,"w":143,"h":254},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposRage_Frame (4).png",
+	"frame": {"x":1894,"y":260,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposRage_Frame (5).png",
+	"frame": {"x":3199,"y":244,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTirRage_Frame (1).png",
+	"frame": {"x":1026,"y":482,"w":143,"h":244},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":11,"w":143,"h":244},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTirRage_Frame (2).png",
+	"frame": {"x":1448,"y":260,"w":154,"h":242},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":13,"w":154,"h":242},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTirRage_Frame (3).png",
+	"frame": {"x":2,"y":714,"w":220,"h":236},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":19,"w":220,"h":236},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTirRage_Frame (4).png",
+	"frame": {"x":3634,"y":244,"w":143,"h":248},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":7,"w":143,"h":248},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTirRage_Frame (5).png",
+	"frame": {"x":3199,"y":244,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTir_Frame (1).png",
+	"frame": {"x":881,"y":482,"w":143,"h":244},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":11,"w":143,"h":244},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTir_Frame (2).png",
+	"frame": {"x":1292,"y":244,"w":154,"h":242},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":13,"w":154,"h":242},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTir_Frame (3).png",
+	"frame": {"x":235,"y":234,"w":220,"h":236},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":19,"w":220,"h":236},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTir_Frame (4).png",
+	"frame": {"x":3489,"y":244,"w":143,"h":248},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":7,"w":143,"h":248},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_ReposTir_Frame (5).png",
+	"frame": {"x":1048,"y":728,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Repos_Frame (1).png",
+	"frame": {"x":969,"y":230,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Repos_Frame (2).png",
+	"frame": {"x":1749,"y":260,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Repos_Frame (3).png",
+	"frame": {"x":2039,"y":260,"w":143,"h":254},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":1,"w":143,"h":254},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Repos_Frame (4).png",
+	"frame": {"x":1604,"y":260,"w":143,"h":252},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":3,"w":143,"h":252},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Repos_Frame (5).png",
+	"frame": {"x":1048,"y":728,"w":143,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":5,"w":143,"h":250},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_SautRage_Frame (1).png",
+	"frame": {"x":3924,"y":242,"w":143,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":15,"w":143,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_SautRage_Frame (2).png",
+	"frame": {"x":2329,"y":260,"w":143,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":0,"w":143,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_Frame (1).png",
+	"frame": {"x":3779,"y":242,"w":143,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":15,"w":143,"h":240},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_Frame (2).png",
+	"frame": {"x":736,"y":470,"w":143,"h":256},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":22,"y":0,"w":143,"h":256},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_Frame (3).png",
+	"frame": {"x":3199,"y":496,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_tir_Rage_frame1.png",
+	"frame": {"x":1193,"y":722,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_tir_Rage_frame2.png",
+	"frame": {"x":1114,"y":244,"w":176,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":176,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_tir_frame1.png",
+	"frame": {"x":1171,"y":488,"w":143,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":143,"h":232},
+	"sourceSize": {"w":256,"h":256}
+},
+{
+	"filename": "Robot_Saut_tir_frame2.png",
+	"frame": {"x":791,"y":230,"w":176,"h":232},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":0,"w":176,"h":232},
+	"sourceSize": {"w":256,"h":256}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "HeroSheet.png",
+	"format": "RGBA8888",
+	"size": {"w":4096,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f5d0f5288f679947d2b4c1df82728c71:a8d9cef2946822b9f0480f9191149adc:8517aca6d1fb330f76487456f39ee43f$"
+}
+}

@@ -11,6 +11,7 @@ var activeTool;
 
 //level elements
 var wallTiles,groundTiles,platFormTiles,enemies;
+var frontElements;
 
 var ratio;
 
@@ -37,7 +38,6 @@ var hudLabels;
 
 var gameOverLabel,gameOver,gameOverTimeout;
 
-var canvasLeftOffset;
 
 var oldheroX;
 var mofe= false;
@@ -51,8 +51,14 @@ var levelParser;
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
 var balles =[];
+var compt;
+
+var currentGamepad;
 
 window.onload = function () {
+
+	retrieveGamePad();
+
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
 
@@ -194,7 +200,6 @@ function death () {
 //Fonctions de synchronisation d'affichage
 window.requestAnimFrame = 	(
 	function(){
-		gamePads = navigator.webkitGetGamepads();
 		// console.log(gamePads.length);
 		return  window.requestAnimationFrame ||
 		window.webkitRequestAnimationFrame ||
