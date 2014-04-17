@@ -16,7 +16,7 @@ function Hero (x,y,image) {
 	this.previousJumpHeight = 0;
 
 	this.lastControl = 0;
-
+	this.surchau= 0;
 	this.updateCalls = [
 		{
 			"callback" : this.control,
@@ -64,7 +64,26 @@ function Hero (x,y,image) {
 	);
 
 	var that = this;
+	
+	if(this.extendedConstructor)
+	{
+		this.extendedConstructor();
+	}		
+
+}
+
+AddGravityBehavior(Hero);
+AddCollisionSidesCapabilities(Hero);
+AddSideMoveCapabilities(Hero);
+AddAttackAbility(Hero);
+AddUpdateAbility(Hero);
+AddAnimateAbilities(Hero);
+
+
+Hero.prototype.control = function() {
 	window.onkeydown = function(event){
+		if ( mofe== false)
+	{
 		switch (event.keyCode){
 			case 38:
 				that.jump();
@@ -82,9 +101,15 @@ function Hero (x,y,image) {
 			case 32:
 				that.meleeAttack();
 				break;
+			case 17:				
+				that.fire();
+				break;
 		}
 	}
+}
 	window.onkeyup = function(event){
+		if ( mofe== false)
+	{
 		switch (event.keyCode){
 			case 37:
 				that.controls.left = false;
@@ -100,22 +125,7 @@ function Hero (x,y,image) {
 			break;
 		}
 	}
-	if(this.extendedConstructor)
-	{
-		this.extendedConstructor();
-	}		
-
-}
-
-AddGravityBehavior(Hero);
-AddCollisionSidesCapabilities(Hero);
-AddSideMoveCapabilities(Hero);
-AddAttackAbility(Hero);
-AddUpdateAbility(Hero);
-AddAnimateAbilities(Hero);
-
-
-Hero.prototype.control = function() {
+	};var that = this;
 	this.direction = this.lastControl;
 	
 	this.lookToward = this.direction!=0?this.direction:this.lookToward;
@@ -124,6 +134,8 @@ Hero.prototype.control = function() {
 	{
 		this.adjustJumpPos();
 	}
+	if (this.surchau>=100){this.surchauffe();this.surchau =100}
+	else {mofe = false}
 };
 
 Hero.prototype.adjustJumpPos = function() {
@@ -209,3 +221,41 @@ Hero.prototype.moveAnimate = function() {
 Hero.prototype.idleAnimate = function() {
 	// console.log("tata");
 };
+Hero.prototype.fire = function() {
+	balles.push(new balle(this.x+this.w/2,this.y,this.lookToward))
+}
+Hero.prototype.surchauffe = function() {
+	if (compt % 120 == 0) 
+	{
+		if (this.lookToward == 0) 
+			{this.lookToward+= Math.floor(Math.random()*2)-1 - Math.floor(Math.random()*2)+1}
+		else 
+		{if (this.lookToward == -1){this.lookToward = 1;}
+					else {this.lookToward = -1;}}
+	};
+	if(compt % 10 == 0)
+	{this.jump();}
+	if((Math.floor((Math.random()*10)+1)>5&& compt % 120 == 0)||(Math.floor((Math.random()*10)+1)>8&& compt % 20 == 0))
+	{
+		if(mofe == true){mofe = false;}
+			else {mofe = true;}
+	};
+	if (mofe == true) 
+	{this.inertia=this.speed * this.lookToward;}
+}
+
+function balle(x,y,direction){
+	this.h = 5* ratio;
+	this.w = 5* ratio;
+	this.x = x;
+	this.y = y;
+	this.direction = direction;
+	this.box = new Box(x,y,5 * ratio,5 * ratio);
+}
+balle.prototype.draw = function() {
+	context.strokeStyle = "#000000";
+	context.strokeRect(this.x,this.y,this.w,this.h);
+}
+balle.prototype.move = function() {
+	this.box.x = this.x+=this.direction*20;
+}
