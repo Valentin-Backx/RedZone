@@ -17,6 +17,7 @@ var ratio;
 var gamePads;
 
 var hero;
+var balle;
 
 var FRAME_JUMP_DELAY = 10;
 
@@ -41,7 +42,7 @@ var gameOverLabel,gameOver,gameOverTimeout;
 var canvasLeftOffset;
 
 var oldheroX;
-
+var mofe= false;
 var scroll =0;
 var vie =10
 var viebase =10
@@ -51,6 +52,7 @@ var levelParser;
 
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
+var balles =[];
 
 window.onload = function () {
 	canvas = document.getElementById("canvas");
@@ -149,8 +151,9 @@ function newGame () {
 	levelParser = new  LevelParser();
 
 	levelParser.parseTiles(currentLevel);
-
+	compt =0;
 	savectx();
+	balles.push(new balle(-60,-60,0))
 }
 
 function manageScore () {
@@ -237,8 +240,8 @@ function menuLoop () {
 }
 
 function gameLoop () {
-
-	if (hero.x > 300 && hero.x < 2000){mouvectx();};
+	compt +=1;
+	if (hero.x > 0 && hero.x < 2000000){mouvectx();};
 
 	oldheroX= hero.x
 
@@ -248,12 +251,39 @@ function gameLoop () {
 
 	context.drawImage(backgroundImage,0,0,backgroundImage.width,backgroundImage.height,0,0,canvasHeight * bgRatio,canvasHeight);
 
+
 	hero.update();
 
 	paralax();
 
+	
+	for (var i = 0; i < balles.length; i++) {
+		balles[i].draw();
+		balles[i].move();
+	}
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< enemies.length; j++) {
+			if (isColliding(balles[i].box,enemies[j].box)){enemies[j].life--;balles.splice(i,1);i--;}
+		}
+	}
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< wallTiles.length; j++) {
+			if (isColliding(balles[i].box,wallTiles[j].box)){balles.splice(i,1);i--;}
+		}
+	}
+	
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< groundTiles.length; j++) {
+			if (isColliding(balles[i].box,groundTiles[j].box)){balles.splice(i,1);i--;}
+		};
+	}
+	for (var i = 0; i < balles.length; i++) {
+		for (var j = 0; j< platFormTiles.length; j++) {
+			if (isColliding(balles[i].box,platFormTiles[j].box)){balles.splice(i,1);i--;}
+		};
+	};
 
-
+	
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
 	};
@@ -263,14 +293,13 @@ function gameLoop () {
 	for (var i = platFormTiles.length - 1; i >= 0; i--) {
 		platFormTiles[i].draw();
 	};
-
-
 	hero.draw();
 	for(var i = enemies.length - 1; i >= 0; i--) {
-		enemies[i].update();
-		enemies[i].draw();
-	};
-
+			enemies[i].update();
+			enemies[i].draw();
+			if (enemies[i].life<=0) {enemies.splice(i,1);i--};
+		};
+	paralaxF();
 	manageScore();
 	displayHud();
 }

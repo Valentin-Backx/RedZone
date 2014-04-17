@@ -85,6 +85,7 @@ function AddSideMoveCapabilities (object) {
 
 		if(this.inertiaFrameCounter++ % INERTIA_FRAME_DELAY == 0)
 		{
+			
 			if(this.direction==0)//frottement (point mort)
 			{
 				if(this.inertia<0)
