@@ -26,9 +26,10 @@ State.prototype.gotoState = function(nextState) {
 	}
 
 	this.currentState = nextState;
+	
 	this.currentAct = this.states[nextState].act;
 
 	for (var i = this.states[nextState].onEnter.length - 1; i >= 0; i--) {
 		this.states[nextState].onEnter[i].call(this.context);
-	};	
+	};
 };

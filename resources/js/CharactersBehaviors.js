@@ -1,7 +1,6 @@
 function AddUpdateAbility (object) {
 	object.prototype.update = function() {
 
-		// console.log(this.updateCalls);
 
 		for (var i = this.updateCalls.length - 1; i >= 0; i--) {
 			// console.log(this.updateCalls[i].callback);
@@ -26,6 +25,7 @@ function AddGravityBehavior (object) {
 								{"callback" : this.move , "context" : this }
 							);
 
+
 		this.direction = 0;
 		this.lookToward = 1;
 		this.inertia = 0;
@@ -34,10 +34,10 @@ function AddGravityBehavior (object) {
 		this.lastFrameTime = new Date().getTime();
 		this.timeSinceAnimStarted = 0;
 
-		this.totalIdleAnim = 1000; //override
-		if(this.frames) this.numberOfFrameIdle = this.frames.idle.length; //virer le test quand le hero aura ses frames aussi
 
 		this.currentFrame;
+
+		this.outerForce = 0;
 	};	
 
 
@@ -47,7 +47,7 @@ function AddGravityBehavior (object) {
 
 		this.box.y+= this.downWardSpeed;
 		
-		var tileCollided  = this.collisionLow(groundTiles)||this.collisionLow(platFormTiles);
+		var tileCollided  = this.collisionLow(groundTiles)||this.collisionLow(platFormTiles) || this.collisionLow(wallTiles);
 
 		if(tileCollided)
 		{
@@ -82,7 +82,6 @@ function AddGravityBehavior (object) {
 function AddSideMoveCapabilities (object) {
 	object.prototype.move = function() {
 
-
 		if(this.inertiaFrameCounter++ % INERTIA_FRAME_DELAY == 0)
 		{
 			if(this.direction==0)//frottement (point mort)
@@ -96,12 +95,12 @@ function AddSideMoveCapabilities (object) {
 					// debugger;
 					this.inertia-= ACCELERATION * ratio;
 					if(this.inertia<0)this.inertia = 0;
-				}
+				}				
+
 			}else
 			{
 				if(this.direction<0)
 				{
-
 					this.inertia += this.inertia + this.speed > 0 ? this.direction * ACCELERATION * ratio:0;
 					// this.inertia = this.inertia + this.speed < 0 ? 0:this.inertia;
 				}else
@@ -114,9 +113,23 @@ function AddSideMoveCapabilities (object) {
 				// 	this.inertia = 0;
 				// }
 			}
+
+				if(this.outerForce<0)
+				{
+					this.outerForce += ACCELERATION * ratio;
+					if(this.outerForce>0) this.outerForce = 0;
+				}else if(this.outerForce>0)
+				{
+					// debugger;
+					this.outerForce-= ACCELERATION * ratio;
+					if(this.outerForce<0)this.outerForce = 0;
+				}
+
 		}
 
-		var xMove = this.inertia;
+		var xMove = this.inertia + this.outerForce;
+
+
 
 		this.box.x += xMove;
 
@@ -190,14 +203,14 @@ function AddDrawAnility(object)  {
 		context.scale(this.lookToward,1);
 			context.drawImage(
 				this.image,
-				this.currentFrame.x,
-				this.currentFrame.y,
-				this.currentFrame.w,
-				this.currentFrame.h,
+				this.currentFrame.frame.x,
+				this.currentFrame.frame.y,
+				this.currentFrame.frame.w,
+				this.currentFrame.frame.h,
 				this.x * this.lookToward,
-				this.y,
-				this.currentFrame.w * ratio * this.lookToward,
-				this.currentFrame.h * ratio
+				this.y + this.currentFrame.spriteSourceSize.y * ratio,
+				this.currentFrame.frame.w * ratio * this.lookToward,
+				this.currentFrame.frame.h * ratio
 				);
 		context.restore();
 	};
@@ -210,6 +223,7 @@ function AddAnimateAbilities (object) {
 	};
 
 	object.prototype.updateState = function() {
+
 		var dateTime = new Date().getTime();
 		var dt = (dateTime - this.lastFrameTime);
 		this.lastFrameTime = dateTime;

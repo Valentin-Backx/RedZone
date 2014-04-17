@@ -27,8 +27,6 @@ var INERTIA_FRAME_DELAY = 5;
 
 var currentLevel;
 
-var wallTileImage,groundTileImage,platFormTileImage,enemyImage;
-
 var display,eventHandler;
 
 var menuButtons;
@@ -140,12 +138,7 @@ function newGame () {
 	gameOverLabel = new Label(canvasWidth / 2,canvasHeight/2,150,50,"GAME OVER");
 
 	comboFrameDelayReset = 60;
-	wallTileImage = new Image();
-	// wallTileImage.src = 
-	groundTileImage = new Image();
-	// groundTileImage.src = 
-	platFormTileImage = new Image();
-	// platFormTileImage.src = 
+
 	levelParser = new  LevelParser();
 
 	levelParser.parseTiles(currentLevel);
@@ -253,10 +246,10 @@ function gameLoop () {
 	paralax();
 
 
-
 	for (var i = wallTiles.length - 1; i >= 0; i--) {
 		wallTiles[i].draw();
 	};
+
 	for (var i = groundTiles.length - 1; i >= 0; i--) {
 		groundTiles[i].draw();
 	};
@@ -272,6 +265,6 @@ function gameLoop () {
 	};
 
 	manageScore();
-	displayHud();
+	displayHud();	
 }
 

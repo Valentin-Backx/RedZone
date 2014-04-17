@@ -74,13 +74,18 @@ function LevelParser () {
 						case "c6":
 						case "c7":
 						case "c8":
-							j -= this.parsePlatform(i,j,level[i][j]);
+							j -= this.parsePlatform(i,j,level[i][j]) - 1;
 							break;
 						case "x":
 							hero = new Hero(j * BASE_TILE_SIZE, i * BASE_TILE_SIZE);
 							break;
 						case "z":
 							this.parseEnemy(i,j);
+							break;
+						case "a2":
+						case "b2":
+						case "c2":
+							this.parseWall(i,j,level[i][j]);
 							break;
 					}
 				};
@@ -155,5 +160,15 @@ function LevelParser () {
 			monstreAFrames);
 		
 		enemies.push(newEnemy);
+	}
+
+	this.parseWall = function  (i,j,tile) {
+		var wallType = tile[0].toUpperCase();
+
+		wallTiles.push(new Tile(
+				j * BASE_TILE_SIZE,
+				i * BASE_TILE_SIZE,
+				eval("this.wall"+wallType)
+			));
 	}
 }
