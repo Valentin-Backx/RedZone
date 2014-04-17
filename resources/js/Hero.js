@@ -17,10 +17,14 @@ function Hero (x,y,image) {
 
 	this.lastControl = 0;
 
-	this.updateCalls = [this.control];
+	this.updateCalls = [
+		{
+			"callback" : this.control,
+			"context" : this
+		}
+	];
 
 	this.life = 200;
-
 
 
 	this.attackRange = 50 * ratio;
@@ -29,7 +33,35 @@ function Hero (x,y,image) {
 	this.meleeWeaponHeight = 1 * ratio;
 	this.meleeWeaponWidth = 10 * ratio;
 	this.meleeForce = 10;
-
+	this.state = new State(
+		{
+			"IDLE" : 
+			{
+				"act" : this.idleAnimate,
+				"onEnter" : [],
+				"onExit" : []
+			}
+			// "MOVING" : 
+			// {
+			// 	"act" : {},
+			// 	"onEnter" : [],
+			// 	"onExit" : []
+			// },
+			// "PREPARE_CHARGE" : 
+			// {
+			// 	"act" : {},
+			// 	"onEnter" : [],
+			// 	"onExit" : []
+			// },
+			// "CHARGE" : 
+			// {
+			// 	"act" : {},
+			// 	"onEnter" : [],
+			// 	"onExit" : []
+			// }
+		}
+		,this
+	);
 
 	var that = this;
 	window.onkeydown = function(event){
@@ -79,13 +111,8 @@ AddGravityBehavior(Hero);
 AddCollisionSidesCapabilities(Hero);
 AddSideMoveCapabilities(Hero);
 AddAttackAbility(Hero);
-
-Hero.prototype.update = function() {
-
-	for (var i = this.updateCalls.length - 1; i >= 0; i--) {
-		this.updateCalls[i].call(this);
-	};
-};
+AddUpdateAbility(Hero);
+AddAnimateAbilities(Hero);
 
 
 Hero.prototype.control = function() {
@@ -151,6 +178,7 @@ Hero.prototype.jump = function() {
 Hero.prototype.draw = function() {
 	context.strokeStyle = "#FFFFFF";
 	context.strokeRect(this.x,this.y,this.w,this.h);
+	this.box.debugDraw();
 };
 
 Hero.prototype.damage = function(damage) {
@@ -166,4 +194,18 @@ Hero.prototype.damage = function(damage) {
 
 Hero.prototype.getTargets = function() {
 	return enemies;
+};
+
+Hero.prototype.attackAnimate = function() {
+	this.timeSinceAnimStarted %= this.totalIdleAnim;
+	this.currentFrame = this.frames[(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];		
+};
+
+Hero.prototype.moveAnimate = function() {
+	this.timeSinceAnimStarted %= this.totalIdleAnim;
+	this.currentFrame = this.frames[(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];		
+};
+
+Hero.prototype.idleAnimate = function() {
+	// console.log("tata");
 };

@@ -35,7 +35,7 @@ function LevelParser () {
 	this.wallC.src = "resources/images/tiles/wallC.png";
 
 	this.enemyA = new Image();
-	this.enemyA.src = "resources/images/testmonstrea.png";
+	this.enemyA.src = "resources/images/monstrea.png";
 
 
 	this.parseTiles = function  (level) {
@@ -152,7 +152,7 @@ function LevelParser () {
 			j * BASE_TILE_SIZE,
 			i * BASE_TILE_SIZE,
 			this.enemyA,
-			jsonLoader.monstreAJson.frames);
+			monstreAFrames);
 		
 		enemies.push(newEnemy);
 	}

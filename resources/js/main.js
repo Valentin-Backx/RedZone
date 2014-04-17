@@ -52,9 +52,6 @@ var levelParser;
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
 
-var jsonLoader = new JSONLoader("resources/json/testmonstrea.json");
-;
-
 window.onload = function () {
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
