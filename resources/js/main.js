@@ -56,7 +56,12 @@ var compt;
 
 var currentGamepad;
 
+var endTitleTop,endTitleBottom,bottomDisplay,bottomTitleLeft;
+var indexCurrentLevel;
+
 window.onload = function () {
+
+	indexCurrentLevel = 0;
 
 	balleImg = new Image();
 	balleImg.src = "resources/images/boulet.png";
@@ -127,19 +132,63 @@ function menuClickEventHandler (event) {
 }
 
 function levelOver () {
+	bottomTitleLeft = canvasWidth;
+	indexCurrentLevel++;
+	bottomDisplay = false;
+
+	endTitleTop = new Image();
+	endTitleTop.src = "resources/images/title_end01.png";
+
+	endTitleBottom = new Image();
+	endTitleBottom.src = "resources/images/title_end02.png";
+	
+	restctx();
+
 	display = levelOverDisplay;
+	eventHandler = levelOverEventListener;
 }
 
 function levelOverDisplay () {
 	
+	context.fillStyle = "#000000";
+
+	context.fillRect(0,0,canvasWidth,canvasHeight);
+
+	context.drawImage(endTitleTop,
+		0,
+		0,
+		endTitleTop.width,
+		endTitleTop.height,
+		(canvasWidth - endTitleTop.width * ratio) / 2,
+		(canvasHeight / 2 - endTitleTop.height * ratio) / 2,
+		endTitleTop.width * ratio,
+		endTitleTop.height * ratio
+		);
+
+	if(bottomTitleLeft > (canvasWidth - endTitleBottom.width * ratio) / 2&&bottomDisplay)
+	{
+		bottomTitleLeft -=15;
+	}
+	if(bottomDisplay)
+	{
+		context.drawImage(endTitleBottom,0,0,endTitleBottom.width,endTitleBottom.height,bottomTitleLeft,(canvasHeight / 2) + (canvasHeight / 2 - endTitleBottom.height * ratio) / 2,endTitleBottom.width * ratio,endTitleBottom.height * ratio);
+	}
 }
 
 function levelOverEventListener () {
-	
+	if(!bottomDisplay)
+	{
+		bottomDisplay = true;
+	}else{
+		delete endTitleTop;
+		delete endTitleBottom;
+		newGame();
+
+	}
 }
 
 function newGame () {
-	currentLevel = levels[0];
+	currentLevel = levels[indexCurrentLevel];
 
 
 	display = gameLoop;
