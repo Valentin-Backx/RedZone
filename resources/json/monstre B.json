@@ -1,0 +1,132 @@
+{"frames": [
+
+{
+	"filename": "Ennemi_02 _MarcheAttak_01.png",
+	"frame": {"x":2,"y":137,"w":176,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":176,"h":131},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02 _MarcheAttak_02.png",
+	"frame": {"x":169,"y":540,"w":165,"h":129},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":14,"w":165,"h":129},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02 _MarcheAttak_03.png",
+	"frame": {"x":2,"y":2,"w":176,"h":133},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":176,"h":133},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Attak_01.png",
+	"frame": {"x":169,"y":409,"w":165,"h":129},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":14,"w":165,"h":129},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Attak_02.png",
+	"frame": {"x":2,"y":270,"w":176,"h":127},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":16,"w":176,"h":127},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Attak_03.png",
+	"frame": {"x":2,"y":798,"w":165,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":165,"h":131},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_01.png",
+	"frame": {"x":2,"y":665,"w":165,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":165,"h":131},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_02.png",
+	"frame": {"x":180,"y":143,"w":165,"h":133},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":165,"h":133},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_03.png",
+	"frame": {"x":180,"y":2,"w":165,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":165,"h":139},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_04.png",
+	"frame": {"x":180,"y":143,"w":165,"h":133},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":165,"h":133},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_05.png",
+	"frame": {"x":180,"y":2,"w":165,"h":139},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":4,"w":165,"h":139},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Idle_06.png",
+	"frame": {"x":2,"y":665,"w":165,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":165,"h":131},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Marche_01.png",
+	"frame": {"x":180,"y":278,"w":165,"h":129},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":14,"w":165,"h":129},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Marche_02.png",
+	"frame": {"x":2,"y":532,"w":165,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":165,"h":131},
+	"sourceSize": {"w":170,"h":147}
+},
+{
+	"filename": "Ennemi_02_Marche_03.png",
+	"frame": {"x":2,"y":399,"w":165,"h":131},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":12,"w":165,"h":131},
+	"sourceSize": {"w":170,"h":147}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "monstre B.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:911a579347ac976f0ee7e30a2b485fbd:b474ad015e878ef064d510cfeeb44af8:5fc50301abff6e526aebcb52174be9d5$"
+}
+}

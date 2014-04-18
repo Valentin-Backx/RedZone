@@ -404,6 +404,13 @@ Hero.prototype.surchauffe = function() {
 	};
 	if(compt % 10 == 0)
 	{this.jump();}
+	if(compt % 15 == 0)
+	{this.meleeAttack();
+	}
+	if(compt % 25)
+	{
+		this.fire();
+	}
 	if((Math.floor((Math.random()*10)+1)>5&& compt % 120 == 0)||(Math.floor((Math.random()*10)+1)>8&& compt % 20 == 0))
 	{
 		if(mofe == true){mofe = false;}
@@ -803,16 +810,16 @@ function balle(x,y,direction){
 	this.h = 5* ratio;
 	this.w = 5* ratio;
 	this.x = x;
-	this.y = y;
+	this.y = y - 50 * ratio;
 	this.direction = direction;
 	this.box = new Box(x,y,5 * ratio,5 * ratio);
 }
 
 balle.prototype.draw = function() {
-	context.strokeStyle = "#000000";
-	context.strokeRect(this.x,this.y,this.w,this.h);
+	context.drawImage(balleImg,0,0,balleImg.width,balleImg.height,this.x,this.y,200 * ratio,200 * ratio);
+	// context.strokeRect(this.x,this.y,this.w,this.h);
 }
 
 balle.prototype.move = function() {
-	this.box.x = this.x+=this.direction*20;
+	this.box.x = this.x+=this.direction*20 * ratio;
 }

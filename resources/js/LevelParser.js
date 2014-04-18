@@ -37,6 +37,9 @@ function LevelParser () {
 	this.enemyA = new Image();
 	this.enemyA.src = "resources/images/monstrea.png";
 
+	this.enemyB = new Image();
+	this.enemyB.src = "resources/images/monstreb.png";
+
 	this.heroImage = new Image();
 	this.heroImage.src = "resources/images/hero.png";
 
@@ -87,6 +90,9 @@ function LevelParser () {
 							break;
 						case "z":
 							this.parseEnemy(i,j);
+							break;
+						case "y":
+							this.parseEnemySmall(i,j);
 							break;
 						case "a2":
 						case "b2":
@@ -166,6 +172,16 @@ function LevelParser () {
 			monstreAFrames);
 		
 		enemies.push(newEnemy);
+	}
+
+	this.parseEnemySmall = function  (i,j) {
+		var newEnemy = new EnemySmall(
+			j * BASE_TILE_SIZE,
+			i * BASE_TILE_SIZE,
+			this.enemyB,
+			enemySmallFrames);
+		
+		enemies.push(newEnemy);		
 	}
 
 	this.parseWall = function  (i,j,tile) {

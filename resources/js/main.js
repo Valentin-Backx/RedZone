@@ -50,12 +50,16 @@ var levelParser;
 
 var score,comboMultiplyer,comboFrameDelayReset,comboMultiplyerCurrentFrame;
 
+var balleImg;
 var balles =[];
 var compt;
 
 var currentGamepad;
 
 window.onload = function () {
+
+	balleImg = new Image();
+	balleImg.src = "resources/images/boulet.png";
 
 	retrieveGamePad();
 
@@ -81,11 +85,6 @@ window.onload = function () {
 
 	ratio = canvasWidth/1920;
 
-	console.log("calculated tile size: "+BASE_TILE_SIZE * ratio);
-
-	console.log("canvasHeight: "+canvasHeight);
-
-	console.log("ratio: "+ratio);
 
 	canvas.width = canvasWidth;
 	canvas.height = canvasHeight;

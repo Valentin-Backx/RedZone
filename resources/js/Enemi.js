@@ -174,7 +174,7 @@ Enemi.prototype.moveAnimate = function() {
 
 	this.timeSinceAnimStarted %= this.totalIdleAnim;
 	this.currentFrame = this.frames["idle"][(this.timeSinceAnimStarted / (this.totalIdleAnim / this.numberOfFrameIdle)) | 0];
-	if(this.x - hero.x > canvasWidth / 2)
+	if(Math.abs(this.x - hero.x) > canvasWidth / 2)
 	{
 		this.state.gotoState("IDLE");
 	}	
