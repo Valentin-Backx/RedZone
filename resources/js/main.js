@@ -115,8 +115,6 @@ function gameStateInit () {
 }
 
 function goToMenu () {
-
-
 	display = menuLoop;
 	eventHandler = menuClickEventHandler;
 	gameOver = false;
@@ -149,6 +147,21 @@ function levelOver () {
 }
 
 function levelOverDisplay () {
+
+	if(gamePadA())
+	{
+		if(bottomDisplay)
+		{
+			if(bottomTitleLeft > (canvasWidth - endTitleBottom.width * ratio) / 2&&bottomDisplay)
+			{
+				bottomTitleLeft = (canvasWidth - endTitleBottom.width * ratio) / 2;
+			}else{
+				newGame();
+			}
+		}
+		bottomDisplay = true;
+
+	}
 	
 	context.fillStyle = "#000000";
 
@@ -201,7 +214,6 @@ function newGame () {
 
 	scoreLabel = new Label(15,15,100,50,"Score: 0");
 	comboLabel = new Label(canvasWidth - 115, 15,100,50,"Combo: X0");
-	gameOverLabel = new Label(canvasWidth / 2,canvasHeight/2,150,50,"GAME OVER");
 
 	comboFrameDelayReset = 60;
 
@@ -230,7 +242,11 @@ function displayHud () {
 	if(gameOver)
 	{
 		gameOverLabel.draw();
-	}
+		if(gamePadA ())
+		{
+			endGameOver();
+		}	
+	}	
 }
 
 function endGameOver (arg) {
@@ -250,6 +266,9 @@ function endGameOver (arg) {
 function death () {
 	currentLevel = 1;
 	gameOver = true;
+
+	gameOverLabel = new GameOverLabel();
+
 	eventHandler = endGameOver;
 	gameOverTimeout = setTimeout(5000,endGameOver);
 }
@@ -296,6 +315,11 @@ function menuLoop () {
 	for (var i = menuButtons.length - 1; i >= 0; i--) {
 		menuButtons[i].draw();
 	};
+
+	if(gamePadA())
+	{
+		newGame();
+	}
 }
 
 function gameLoop () {
