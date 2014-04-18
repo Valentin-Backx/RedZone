@@ -46,6 +46,23 @@ function LevelParser () {
 	this.sautFrappesImage = new Image();
 	this.sautFrappesImage.src = "resources/images/saut+frappe.png";
 
+	this.rewardImages = 
+	[
+		new Image(),
+		new Image(),
+		new Image(),
+		new Image(),
+		new Image(),
+		new Image()
+	]
+
+	this.rewardImages[0].src = "resources/images/reward/reward00.png";
+	this.rewardImages[1].src = "resources/images/reward/reward01.png";
+	this.rewardImages[2].src = "resources/images/reward/reward02.png";
+	this.rewardImages[3].src = "resources/images/reward/reward03.png";
+	this.rewardImages[4].src = "resources/images/reward/reward04.png";
+	this.rewardImages[5].src = "resources/images/reward/reward05.png";
+
 
 	this.parseTiles = function  (level) {
 		wallTiles = new Array();
@@ -98,6 +115,9 @@ function LevelParser () {
 						case "b2":
 						case "c2":
 							this.parseWall(i,j,level[i][j]);
+							break;
+						case "r":
+							this.parseReward(i,j);
 							break;
 					}
 				};
@@ -192,5 +212,13 @@ function LevelParser () {
 				i * BASE_TILE_SIZE,
 				eval("this.wall"+wallType)
 			));
+	}
+
+	this.parseReward = function  (i,j) {
+		reward = new Reward(
+			j * BASE_TILE_SIZE,
+			i * BASE_TILE_SIZE,
+			this.rewardImages
+			)
 	}
 }

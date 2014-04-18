@@ -15,7 +15,14 @@ function retrieveGamePad() {
         	return;
         }
         // todo; simple demo of displaying pad.axes and pad.buttons
-    }	
+    }
+
+    var pads = Gamepad.getStates();
+    for (var i = 0; i < pads.length; ++i) {
+        if (pads[i]) {
+            console.log(i + ": (" + pads[i].leftStickX + ", " + pads[i].leftStickY + ")");
+        }
+    }
 }
 
 function onGamepadConnected (gamePad) {

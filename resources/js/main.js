@@ -10,7 +10,7 @@ var backgroundImage;
 var activeTool;
 
 //level elements
-var wallTiles,groundTiles,platFormTiles,enemies;
+var wallTiles,groundTiles,platFormTiles,enemies,reward;
 var frontElements;
 
 var ratio;
@@ -60,8 +60,6 @@ window.onload = function () {
 
 	balleImg = new Image();
 	balleImg.src = "resources/images/boulet.png";
-
-	retrieveGamePad();
 
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
@@ -128,8 +126,14 @@ function menuClickEventHandler (event) {
 	};
 }
 
+function levelOver () {
+	//display black screen with: you got your fix! live to struggle another day
+	//tempo....
+	//DAY 2
+}
+
 function newGame () {
-	currentLevel = level4;
+	currentLevel = levels[0];
 
 
 	display = gameLoop;
@@ -212,6 +216,9 @@ window.requestAnimFrame = 	(
 )();
 
 function run () {
+
+	retrieveGamePad();
+
 	// for (var i = gamePads.length - 1; i >= 0; i--) {
 	// 	console.log(gamePads[i]);
 	// };
@@ -250,6 +257,7 @@ function gameLoop () {
 
 
 	hero.update();
+	reward.update();
 
 	paralax();
 
@@ -290,6 +298,9 @@ function gameLoop () {
 	for (var i = platFormTiles.length - 1; i >= 0; i--) {
 		platFormTiles[i].draw();
 	};
+
+	reward.draw();
+
 	hero.draw();
 	for(var i = enemies.length - 1; i >= 0; i--) {
 			enemies[i].update();

@@ -1,7 +1,7 @@
 function Hero (x,y,image,frames,sautFrappeImage) {
 
 	var that = this;
-	if(!this.currentGamepad)
+	if(!currentGamepad)
 	{
 		window.onkeydown = function(event){
 			if ( mofe== false)
@@ -272,15 +272,17 @@ AddDrawAnility(Hero);
 
 Hero.prototype.control = function() {
 
-
-	if(this.currentGamepad)
+	if(currentGamepad)
 	{
-
+		this.lastControl = Math.abs(currentGamepad.axes[0])<0.2?0:currentGamepad.axes[0];
+		if(currentGamepad.buttons[0]) this.jump();
+		if(currentGamepad.buttons[2]) this.meleeAttack();
+		if(currentGamepad.buttons[3]) this.fire();
 	}
 
 	this.direction = this.lastControl;
 	
-	this.lookToward = this.direction!=0?this.direction:this.lookToward;
+	this.lookToward = this.direction!=0?(this.direction<0?-1:1):this.lookToward;
 	// console.log("in control: "+this.lastControl)
 	if(this.jumping)
 	{
