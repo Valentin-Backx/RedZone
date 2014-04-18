@@ -67,7 +67,12 @@ var compt;
 
 var currentGamepad;
 
+var endTitleTop,endTitleBottom,bottomDisplay,bottomTitleLeft;
+var indexCurrentLevel;
+
 window.onload = function () {
+	retrieveGamePad();
+	indexCurrentLevel = 0;
 
 	balleImg = new Image();
 	balleImg.src = "resources/images/boulet.png";
@@ -111,47 +116,9 @@ window.onload = function () {
 
 	run();
 }
-	
-function gameStateInit () {
-	window.addEventListener("click",function(event){eventHandler(event) },false);
-
-	menuButtons = [];
-	menuButtons.push(new Button(canvasWidth / 2,canvasHeight / 2,400,150,"New Game",newGame));
-	goToMenu();
-}
-
-function goToMenu () {
-
-
-	display = menuLoop;
-	eventHandler = menuClickEventHandler;
-	gameOver = false;
-}
-
-function menuClickEventHandler (event) {
-	for (var i = menuButtons.length - 1; i >= 0; i--) {
-		if(menuButtons[i].isClicked(event.x-canvasLeftOffset,event.y))
-		{
-			menuButtons[i].action();
-		}
-	};
-}
-
-function levelOver () {
-	display = levelOverDisplay;
-}
-
-function levelOverDisplay () {
-	
-}
-
-function levelOverEventListener () {
-	
-}
 
 function newGame () {
-	currentLevel = levels[0];
-
+	currentLevel = levels[indexCurrentLevel];
 
 	display = gameLoop;
 	eventHandler = function  () {
@@ -177,6 +144,7 @@ function newGame () {
 	hero.life=200
 }
 
+
 function manageScore () {
 	if(comboMultiplyer > 0)
 	{
@@ -187,6 +155,124 @@ function manageScore () {
 	}
 	scoreLabel.text = "Score: "+score;
 }
+
+function menuLoop () {
+	context.drawImage(Fond_Menu,0,0,Fond_Menu.width,Fond_Menu.height,0,0,canvasWidth,canvasHeight);
+
+
+	for (var i = menuButtons.length - 1; i >= 0; i--) {
+		context.drawImage(Bouton_Over,0,0,Bouton_Over.width,Bouton_Over.height,menuButtons[i].x,menuButtons[i].y,Bouton_Over.width/2,Bouton_Over.height/2);
+	};
+
+	if(gamePadA())
+	{
+		newGame();
+	}
+
+}
+
+function goToMenu () {
+	display = menuLoop;
+	eventHandler = menuClickEventHandler;
+	gameOver = false;
+}
+
+
+function gameStateInit () {
+	window.addEventListener("click",function(event){eventHandler(event) },false);
+
+	menuButtons = [];
+
+	menuButtons.push(new Button(canvasWidth / 2,canvasHeight / 2,400,150,"New Game",newGame));
+	goToMenu();
+}
+
+
+function menuClickEventHandler (event) {
+	for (var i = menuButtons.length - 1; i >= 0; i--) {
+		if(menuButtons[i].isClicked(event.x-canvasLeftOffset,event.y))
+		{
+			menuButtons[i].action();
+		}
+	};
+}
+
+function levelOver () {
+
+	bottomTitleLeft = canvasWidth;
+	indexCurrentLevel++;
+	bottomDisplay = false;
+
+	endTitleTop = new Image();
+	endTitleTop.src = "resources/images/title_end01.png";
+
+	endTitleBottom = new Image();
+	endTitleBottom.src = "resources/images/title_end02.png";
+	
+	restctx();
+
+	display = levelOverDisplay;
+	eventHandler = levelOverEventListener;
+}
+
+function levelOverDisplay () {
+	if(gamePadA())
+	{
+		if(bottomDisplay)
+		{
+			if(bottomTitleLeft > (canvasWidth - endTitleBottom.width * ratio) / 2&&bottomDisplay)
+			{
+				bottomTitleLeft = (canvasWidth - endTitleBottom.width * ratio) / 2;
+			}else{
+				newGame();
+			}
+		}
+		bottomDisplay = true;
+
+	}
+
+	context.fillStyle = "#000000";
+
+	context.fillRect(0,0,canvasWidth,canvasHeight);
+
+	context.drawImage(endTitleTop,
+		0,
+		0,
+		endTitleTop.width,
+		endTitleTop.height,
+		(canvasWidth - endTitleTop.width * ratio) / 2,
+		(canvasHeight / 2 - endTitleTop.height * ratio) / 2,
+		endTitleTop.width * ratio,
+		endTitleTop.height * ratio
+		);
+
+	if(bottomTitleLeft > (canvasWidth - endTitleBottom.width * ratio) / 2&&bottomDisplay)
+	{
+		bottomTitleLeft -=15;
+	}
+	if(bottomDisplay)
+	{
+		context.drawImage(endTitleBottom,0,0,endTitleBottom.width,endTitleBottom.height,bottomTitleLeft,(canvasHeight / 2) + (canvasHeight / 2 - endTitleBottom.height * ratio) / 2,endTitleBottom.width * ratio,endTitleBottom.height * ratio);
+	
+	}
+}
+
+function levelOverEventListener () {
+	if(!bottomDisplay)
+	{
+		bottomDisplay = true;
+	}else{
+		delete endTitleTop;
+		delete endTitleBottom;
+		newGame();
+
+	}
+	
+}
+
+
+
+
 
 function displayHud () {
 	if (hero.life<0) {hero.life=0};
@@ -201,11 +287,17 @@ function displayHud () {
 	else if (hero.surchau>100) {context.drawImage(fleche3,0,0,fleche3.width,fleche3.height,50+conteurctx,35,(fleche3.width)/1.5,fleche3.height/1.5);}
 	else if (hero.surchau>50) {context.drawImage(fleche2,0,0,fleche2.width,fleche2.height,50+conteurctx,35,(fleche2.width)/1.5,fleche2.height/1.5);}
 	else if (hero.surchau>=0) {context.drawImage(fleche1,0,0,fleche1.width,fleche1.height,49+conteurctx,35,(fleche1.width)/1.5,fleche1.height/1.5);};
-	if(gameOver)
-	{
-		gameOverLabel.draw();
+		if(gameOver)
+		{
+			gameOverLabel.draw();
+			if(gamePadA ())
+			{
+				endGameOver();
+			}	
+		}	
 	}
-}
+
+
 
 function endGameOver (arg) {
 
@@ -224,6 +316,7 @@ function endGameOver (arg) {
 function death () {
 	currentLevel = 1;
 	gameOver = true;
+	gameOverLabel = new GameOverLabel();
 	eventHandler = endGameOver;
 	gameOverTimeout = setTimeout(5000,endGameOver);
 }
@@ -263,13 +356,7 @@ function enemyKilled (enemy) {
 	};
 }
 
-function menuLoop () {
-context.drawImage(Fond_Menu,0,0,Fond_Menu.width,Fond_Menu.height,0,0,canvasWidth,canvasHeight);
 
-	for (var i = menuButtons.length - 1; i >= 0; i--) {
-		context.drawImage(Bouton_Over,0,0,Bouton_Over.width,Bouton_Over.height,menuButtons[i].x,menuButtons[i].y,Bouton_Over.width/2,Bouton_Over.height/2);
-	};
-}
 
 function gameLoop () {
 	compt +=1;

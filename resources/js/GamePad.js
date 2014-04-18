@@ -1,5 +1,4 @@
 function retrieveGamePad() {
-
 	var gamePads = (function()
 	{
 		return navigator.webkitGetGamepads ||navigator.getGamepads
@@ -25,15 +24,27 @@ function retrieveGamePad() {
     //     }
     // }
 }
+var counterDispo = true;
+var frameCounter = 0;
 
-function onGamepadConnected (gamePad) {
-	currentGamepad = gamePad;
-}
+function gamePadA () {
+    if(!currentGamepad) return false;
 
-function gamePadControls () {
+    if(++frameCounter >= 20)
+    {
+        counterDispo = true;
+        frameCounter = 0;
+    }
+
+    if(currentGamepad.buttons[0]&&counterDispo)
+    {
+
+        counterDispo = false;
+
+        return true;
+
+    }
+    return false;
+
 	
 }
-
-window.addEventListener("MozGamepadConnected", onGamepadConnected);
-
-window.addEventListener("gamepadconnected",onGamepadConnected);
