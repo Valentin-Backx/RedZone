@@ -60,6 +60,12 @@ function EnemySmall (x,y,image,frames)  {
 				"act" : this.attakAnimate,
 				"onEnter" : [this.enterAttakStill],
 				"onExit" : []
+			},
+			"DEATH" : 
+			{
+				"act" : this.deathAnimate,
+				"onEnter" : [this.adjustDeathHeight],
+				"onExit" : []				
 			}
 		}
 		,this
@@ -73,7 +79,7 @@ function EnemySmall (x,y,image,frames)  {
 
 	this.frameIndex = 0;
 }
-
+AddDeathBehavior(EnemySmall);
 AddGravityBehavior(EnemySmall);
 AddCollisionSidesCapabilities(EnemySmall);
 AddSideMoveCapabilities(EnemySmall);
@@ -85,8 +91,12 @@ EnemySmall.prototype.damage = function(damage) {
 	this.life -= damage;
 	if(this.life <= 0)
 	{
-		enemyKilled(this);
+		this.death();
 	}
+};
+
+EnemySmall.prototype.deathSpecific = function() {
+	enemyKilled(this);
 };
 
 EnemySmall.prototype.getTargets = function() {

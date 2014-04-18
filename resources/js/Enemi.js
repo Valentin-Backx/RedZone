@@ -69,6 +69,12 @@ function Enemi (x,y,image,frames) {
 				"act" : this.chargeAnimate,
 				"onEnter" : [this.enterNewAnimation,this.charge],
 				"onExit" : [this.chargeOver]
+			},
+			"DEATH" : 
+			{
+				"act" : this.deathAnimate,
+				"onEnter" : [this.adjustDeathHeight],
+				"onExit" : []				
 			}
 		}
 		,this
@@ -82,7 +88,7 @@ function Enemi (x,y,image,frames) {
 
 	this.frameIndex = 0;
 }
-
+AddDeathBehavior(Enemi);
 AddGravityBehavior(Enemi);
 AddCollisionSidesCapabilities(Enemi);
 AddSideMoveCapabilities(Enemi);
@@ -94,8 +100,12 @@ Enemi.prototype.damage = function(damage) {
 	this.life -= damage;
 	if(this.life <= 0)
 	{
-		enemyKilled(this);
+		this.death();
 	}
+};
+
+Enemi.prototype.deathSpecific = function() {
+		enemyKilled(this);
 };
 
 Enemi.prototype.getTargets = function() {

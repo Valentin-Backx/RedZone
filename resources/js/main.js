@@ -127,9 +127,15 @@ function menuClickEventHandler (event) {
 }
 
 function levelOver () {
-	//display black screen with: you got your fix! live to struggle another day
-	//tempo....
-	//DAY 2
+	display = levelOverDisplay;
+}
+
+function levelOverDisplay () {
+	
+}
+
+function levelOverEventListener () {
+	
 }
 
 function newGame () {

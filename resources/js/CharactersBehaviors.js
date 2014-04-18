@@ -14,6 +14,8 @@ function AddGravityBehavior (object) {
 	
 	object.prototype.extendedConstructor = function() {
 
+		this.draw = this.gameDraw;
+
 		this.blockedSides = {"left":false,"right":false};
 
 		this.downWardSpeed = 0;
@@ -39,6 +41,8 @@ function AddGravityBehavior (object) {
 
 		this.outerForce = 0;
 		this.currentImage = this.image;
+
+		this.totalDeathAnimTime = 2000;
 	};	
 
 
@@ -185,21 +189,38 @@ function AddCollisionSidesCapabilities (object) {
 
 
 function AddDrawAnility(object)  {
-	object.prototype.draw = function() {
-		context.save();
-		context.scale(this.lookToward,1);
-			context.drawImage(
-				this.currentImage,
-				this.currentFrame.frame.x,
-				this.currentFrame.frame.y,
-				this.currentFrame.frame.w,
-				this.currentFrame.frame.h,
-				this.x * this.lookToward,
-				this.y + this.currentFrame.spriteSourceSize.y * ratio,
-				this.currentFrame.frame.w * ratio * this.lookToward,
-				this.currentFrame.frame.h * ratio
-				);
-		context.restore();
+
+
+
+	object.prototype.gameDraw = function() {
+			context.save();
+			context.scale(this.lookToward,1);
+				context.drawImage(
+					this.currentImage,
+					this.currentFrame.frame.x,
+					this.currentFrame.frame.y,
+					this.currentFrame.frame.w,
+					this.currentFrame.frame.h,
+					this.x * this.lookToward,
+					this.y + this.currentFrame.spriteSourceSize.y * ratio,
+					this.currentFrame.frame.w * ratio * this.lookToward,
+					this.currentFrame.frame.h * ratio
+					);
+			context.restore();
+		};
+
+	object.prototype.deathDraw = function() {
+		context.drawImage(
+					this.currentImage,
+					this.currentFrame.frame.x,
+					this.currentFrame.frame.y,
+					this.currentFrame.frame.w,
+					this.currentFrame.frame.h,
+					this.x - (this.currentFrame.frame.w/2) * ratio,
+					this.y + this.h - (this.currentFrame.frame.h / 2) * ratio,
+					this.currentFrame.spriteSourceSize.w * ratio / 1.5,
+					this.currentFrame.spriteSourceSize.h * ratio / 1.5				
+			)
 	};
 }
 
@@ -215,5 +236,40 @@ function AddAnimateAbilities (object) {
 		var dt = (dateTime - this.lastFrameTime);
 		this.lastFrameTime = dateTime;
 		this.timeSinceAnimStarted += dt;
+	};
+}
+
+function AddDeathBehavior (object) {
+
+	object.prototype.death = function() {
+		this.dead = true;
+		this.state.gotoState("DEATH");
+	};
+
+	object.prototype.adjustDeathHeight = function() {
+		this.draw = this.deathDraw;
+		// this.y = this.y + this.h - this.currentFrame.frame.h * ratio / 2;
+	};
+
+	object.prototype.deathAnimate = function() {
+
+		if(this.deathAnimationPlayed) return;
+
+		this.timeSinceAnimStarted %= this.totalDeathAnimTime;
+
+		var indexFrame = (this.timeSinceAnimStarted / (this.totalDeathAnimTime / explosionFrames.length)) | 0;
+
+		this.currentFrame = explosionFrames[indexFrame];
+
+
+		this.currentImage = explosionImage;
+		
+		if(indexFrame == explosionFrames.length - 1)
+		{
+			this.deathAnimationPlayed = true;
+			// this.y = 3000;
+			this.deathSpecific()
+		}
+
 	};
 }

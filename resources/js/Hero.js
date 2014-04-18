@@ -111,26 +111,26 @@ function Hero (x,y,image,frames,sautFrappeImage) {
 			"IDLE_ATTACK" :
 			{
 				"act" : this.meleeAttackAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"IDLE_ATTACK_RAGE" :
 			{
 				"act" : this.idleAttackAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"IDLE_SHOOT" :
 			{
 				"act" : this.shootAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"IDLE_SHOOT_RAGE" :
 			{
 				"act" : this.idleShootAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"RUN" : 
 			{
@@ -147,26 +147,26 @@ function Hero (x,y,image,frames,sautFrappeImage) {
 			"RUN_ATTACK" : 
 			{
 				"act" : this.runMeleeAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"RUN_ATTACK_RAGE" : 
 			{
 				"act" : this.runAttackAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"RUN_SHOOT" : 
 			{
 				"act" : this.runShootAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"RUN_SHOOT_RAGE" : 
 			{
 				"act" : this.runShootAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"JUMP" :
 			{
@@ -183,26 +183,32 @@ function Hero (x,y,image,frames,sautFrappeImage) {
 			"JUMP_ATTACK" :
 			{
 				"act" : this.jumpMeleAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"JUMP_ATTACK_RAGE" :
 			{
 				"act" : this.jumpAttackAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.enterMeleeAttackState,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"JUMP_SHOOT" :
 			{
 				"act" : this.jumpShootAnimate,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
 			},
 			"JUMP_SHOOT_RAGE" :
 			{
 				"act" : this.jumpShootAnimateRage,
-				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter],
-				"onExit" : []
+				"onEnter" : [this.enterNewAnimation,this.checkRageStatus,this.shootAnimateEnter,this.lockShoot],
+				"onExit" : [this.unLockShoot]
+			},
+			"DEATH" : 
+			{
+				"act" : this.deathAnimate,
+				"onEnter" : [this.adjustDeathHeight],
+				"onExit" : []				
 			}
 		}
 		,this
@@ -262,7 +268,7 @@ function Hero (x,y,image,frames,sautFrappeImage) {
 	}		
 
 }
-
+AddDeathBehavior(Hero);
 AddGravityBehavior(Hero);
 AddCollisionSidesCapabilities(Hero);
 AddSideMoveCapabilities(Hero);
@@ -342,6 +348,7 @@ Hero.prototype.endJump = function() {
 };
 
 Hero.prototype.jump = function() {
+	if(this.dead) return;
 	this.surchau+= this.rageTimerOn?0:4;
 	if(this.touchGround)
 	{
@@ -366,16 +373,29 @@ Hero.prototype.damage = function(damage) {
 		if(!gameOver)
 		{
 			this.speed = 0;
-			death();	
+			this.death();
 		}
 	}
+};
+
+Hero.prototype.deathSpecific = function() {
+	death();	
 };
 
 Hero.prototype.getTargets = function() {
 	return enemies;
 };
 
+Hero.prototype.lockShoot = function() {
+	this.atckCooldown = true;
+};
+
+Hero.prototype.unLockShoot = function() {
+	this.atckCooldown = false;
+};
+
 Hero.prototype.fire = function() {
+	if(this.atckCooldown) return;
 	this.surchau+=this.rageTimerOn?0:10;
 	switch(this.state.currentState)
 	{
@@ -423,6 +443,7 @@ Hero.prototype.surchauffe = function() {
 }
 
 Hero.prototype.meleeAttack = function() {
+	if(this.atckCooldown) return;
 	this.surchau+=this.rageTimerOn?0:10;
 	switch(this.state.currentState)
 	{
