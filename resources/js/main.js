@@ -379,7 +379,7 @@ function gameLoop () {
 	}
 	for (var i = 0; i < balles.length; i++) {
 		for (var j = 0; j< enemies.length; j++) {
-			if (isColliding(balles[i].box,enemies[j].box)){enemies[j].life--;balles.splice(i,1);i--;}
+			if (isColliding(balles[i].box,enemies[j].box)){enemies[j].life-=5;balles.splice(i,1);i--;}
 		}
 	}
 	for (var i = 0; i < balles.length; i++) {

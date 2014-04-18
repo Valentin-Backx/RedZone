@@ -42,7 +42,7 @@ function AddGravityBehavior (object) {
 		this.outerForce = 0;
 		this.currentImage = this.image;
 
-		this.totalDeathAnimTime = 2000;
+		this.totalDeathAnimTime = 3000;
 	};	
 
 

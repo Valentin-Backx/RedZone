@@ -396,7 +396,7 @@ Hero.prototype.unLockShoot = function() {
 
 Hero.prototype.fire = function() {
 	if(this.atckCooldown) return;
-	this.surchau+=this.rageTimerOn?0:10;
+	this.surchau+=this.rageTimerOn?0:4;
 	switch(this.state.currentState)
 	{
 		case "IDLE":
