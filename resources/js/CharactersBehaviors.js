@@ -216,8 +216,8 @@ function AddDrawAnility(object)  {
 					this.currentFrame.frame.y,
 					this.currentFrame.frame.w,
 					this.currentFrame.frame.h,
-					this.x + (this.w/2) - (this.currentFrame.frame.w * (438 / 1000)) * ratio,
-					this.y + this.h - (this.currentFrame.frame.h / (436 / 700)) * ratio,
+					this.x - (this.currentFrame.frame.w/2) * ratio,
+					this.y + this.h - (this.currentFrame.frame.h / 2) * ratio,
 					this.currentFrame.spriteSourceSize.w * ratio / 1.5,
 					this.currentFrame.spriteSourceSize.h * ratio / 1.5				
 			)

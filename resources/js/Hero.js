@@ -294,7 +294,7 @@ Hero.prototype.control = function() {
 	{
 		this.adjustJumpPos();
 	}
-	if (this.surchau>=100){this.surchauffe();this.surchau =100}
+	if (this.surchau>=400){this.surchauffe();this.surchau =400}
 	else {mofe = false}
 };
 
@@ -413,6 +413,7 @@ Hero.prototype.fire = function() {
 
 Hero.prototype.shootBullet = function() {
 	balles.push(new balle(this.x+this.w/2,this.y,this.lookToward));
+	this.surchau+=4
 };
 
 Hero.prototype.surchauffe = function() {
@@ -807,7 +808,7 @@ Hero.prototype.hurtAnimateRage = function() {
 };
 
 Hero.prototype.checkRageStatus = function(nextState) {
-	if(this.surchau >= 100&&!this.rageTimerOn)
+	if(this.surchau >= 400&&!this.rageTimerOn)
 	{
 		this.previousFrameRageTimer = new Date().getTime();
 		this.rageTimerOn = true;

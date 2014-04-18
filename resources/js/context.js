@@ -1,7 +1,7 @@
 var conteurctx = 0;
 function mouvectx(){
 	context.translate(oldheroX-hero.x, 0);
-	conteurctx -= oldheroX-hero.x
+	if (oldheroX-hero.x){conteurctx2=conteurctx -= oldheroX-hero.x;};
 }
 function savectx(){
 	context.save()
