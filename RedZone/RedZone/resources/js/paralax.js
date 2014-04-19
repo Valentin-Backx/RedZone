@@ -59,26 +59,26 @@ function paralax (){
 		else{context.drawImage(bg0a,0,0,bg0a.width,bg0a.height,canvasWidth*14,0,a,b)};
 
 	var boby1 =[-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,];
-		for(var i=0;i<boby1.length;i++){if (bg1X+a*boby1[i]>hero.x-2500&&bg1X+a*boby1[i]<hero.x+2000){context.drawImage(bg1a,0,0,bg1a.width,bg1a.height,bg1X+a*boby1[i],0,a,b)};};
+		for(var i=0;i<boby1.length;i++){if (bg1X+a*boby1[i]>hero.x-2800&&bg1X+a*boby1[i]<hero.x+2500){context.drawImage(bg1a,0,0,bg1a.width,bg1a.height,bg1X+a*boby1[i],0,a,b)};};
 	var boby11 =[15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47];
-		for(var i=0;i<boby11.length;i++){if (bg1X+a*boby11[i]>hero.x-2500&&bg1X+a*boby11[i]<hero.x+2000){context.drawImage(bg1b,0,0,bg1b.width,bg1b.height,bg1X+a*boby11[i],0,a,b)};};
+		for(var i=0;i<boby11.length;i++){if (bg1X+a*boby11[i]>hero.x-2800&&bg1X+a*boby11[i]<hero.x+2500){context.drawImage(bg1b,0,0,bg1b.width,bg1b.height,bg1X+a*boby11[i],0,a,b)};};
 	var boby111=[48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,68,69];
-		for(var i=0;i<boby111.length;i++){if (bg1X+a*boby111[i]>hero.x-2500&&bg1X+a*boby111[i]<hero.x+2000){context.drawImage(bg1c,0,0,bg1c.width,bg1c.height,bg1X+a*boby111[i],0,a,b)};};
+		for(var i=0;i<boby111.length;i++){if (bg1X+a*boby111[i]>hero.x-2800&&bg1X+a*boby111[i]<hero.x+2500){context.drawImage(bg1c,0,0,bg1c.width,bg1c.height,bg1X+a*boby111[i],0,a,b)};};
 		context.drawImage(bg1b2,0,0,bg1b2.width,bg1b2.height,bg1X+a*48,0,a,b)
 	
 
 
 	var boby22 =[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41];
-		for(var i=0;i<boby22.length;i++){if (bg1X+a*boby22[i]>hero.x-2500&&bg1X+a*boby22[i]<hero.x+2000){context.drawImage(bg2b,0,0,bg2b.width,bg2b.height,bg2X+a*boby22[i],0,a,b)}};
-
+		for(var i=0;i<boby22.length;i++){if (bg1X+a*boby22[i]>hero.x-2800&&bg1X+a*boby22[i]<hero.x+2500){context.drawImage(bg2b,0,0,bg2b.width,bg2b.height,bg2X+a*boby22[i],0,a,b)}};
 		var tabl33 = [-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
 		var tabl3 =[bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a,bg3a2,bg3b2,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg3b,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c,bg2c]
-		for(var i=0;i<tabl33.length;i++){if (bg1X+a*tabl33[i]>hero.x-2500&&bg1X+a*tabl33[i]<hero.x+2000){context.drawImage(tabl3[i],0,0,tabl3[i].width,tabl3[i].height,bg3X+a*tabl33[i],0,a,b)}};
+		for(var i=0;i<tabl33.length;i++){if (bg1X+a*tabl33[i]>hero.x-2800&&bg1X+a*tabl33[i]<hero.x+2500){context.drawImage(tabl3[i],0,0,tabl3[i].width,tabl3[i].height,bg3X+a*tabl33[i],0,a,b)}};
 
 
 		var tabl44 = [-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
 		var tabl4 = [bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a,bg4a2,bg4b2,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4b,bg4c2,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c,bg4c]
-		for(var i=0;i<tabl44.length;i++){	if (bg1X+a*tabl44[i]>hero.x-2500&&bg1X+a*tabl44[i]<hero.x+2000){context.drawImage(tabl4[i],0,0,tabl4[i].width,tabl4[i].height,bg3X+a*tabl44[i],0,a,b)}};
+		for(var i=0;i<tabl44.length;i++){	if (bg1X+a*tabl44[i]>hero.x-2800&&bg1X+a*tabl44[i]<hero.x+2500){context.drawImage(tabl4[i],0,0,tabl4[i].width,tabl4[i].height,bg3X+a*tabl44[i],0,a,b)}};
+			context.drawImage(wall,0,0,wall.width,wall.height,-wall.width/2,0,canvasWidth,canvasHeight);
 }	
 function paralaxF (){
 	var fgXV =0;
