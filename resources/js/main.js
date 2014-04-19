@@ -118,6 +118,9 @@ window.onload = function () {
 }
 
 function newGame () {
+
+	console.log(oldheroX);
+
 	currentLevel = levels[indexCurrentLevel];
 
 	display = gameLoop;
@@ -142,6 +145,8 @@ function newGame () {
 	balles.push(new balle(-60,-60,0))
 	hero.surchau =0
 	hero.life=200
+
+
 }
 
 
